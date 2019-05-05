@@ -59,8 +59,9 @@ int advance_steps(int steps) {
      long width_divide  = divide(CURSOR VIDEO_TILES_WIDTH);
      long height_divide = divide(CURSOR VIDEO_TILES_HEIGHT);
 
-     CURSOR_X = width_divide  >> 16;
-     CURSOR_Y = height_divide >> 16;
+     // TODO Uncomment when shifts are available
+     //CURSOR_X = width_divide  >> 16;
+     //CURSOR_Y = height_divide >> 16;
 }
 
 /*  ADVANCE LINE - Advance the cursor one line
@@ -133,11 +134,14 @@ int print_c(char c) {
     Returns:
      bool - returns false if invalid color is given
 */
-int print(int lenght char cb) {
+int print(int lenght int cb_p) {
+     // NOTE: This could be shortened to use the pointer as length counter, saving one operation per loop
      int i = 0;
      while (i < lenght) {
-          print_c(*cb)
-          cb = cb + 1;
+          // TODO Uncomment when pointers are available
+          //print_c(*cb)
+          cb_p = cb_p + 1;
+          i = i + 1;
      }
 }
 
