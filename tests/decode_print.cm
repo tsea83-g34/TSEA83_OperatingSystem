@@ -1,0 +1,26 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic test program that reads input and outputs to screen
+*/
+
+#include ../std_lib/std_lib.cm
+#include ../std_lib/video.cm
+#include ../std_lib/keyboard.cm
+#include ../std_lib/print.cm
+
+int main() {
+    // Keyboard read loop
+    long keyboard = 0;
+    while(1) {
+        keyboard = read_char();
+
+        // New input
+        if (keyboard != 0) {
+            // Output the character
+            // (Note that this should cut keyboard to char length)
+            print_c(keyboard);
+        }
+    }
+
+}
