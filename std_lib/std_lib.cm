@@ -39,8 +39,7 @@ int MEMORY_SIZE = 4096;
 
 long in(int port) {
     long ret;
-    //TODO Uncomment when inline assemby available
-    //asm("in $, $" ret port);
+    asm ("in $, $" ret port);
     return ret;
 }
 
@@ -54,8 +53,7 @@ long in(int port) {
 */
 
 int out(long value int port) {
-    //TODO Uncomment when inline assemby available
-    //asm("out $, $" port value);
+    asm ("out $, $" port value);
 }
 
 /*  VGA WRITE - Write a value to video memory
@@ -69,8 +67,7 @@ int out(long value int port) {
 */
 
 int vga_write(long value int addr) {
-    //TODO Uncomment when inline assemby available
-    //asm("vgaw $, $" addr value);
+    asm ("vgaw $, $" addr value);
 }
 
 // ============ Utility ============
