@@ -1,0 +1,82 @@
+/*
+C-- STANDARD LIB VIDEO
+
+Requires:
+ - STD_LIB
+*/
+
+// =========== Constants ===========
+int VIDEO_TILE_WIDTH  = 40;
+int VIDEO_TILE_HEIGHT = 30;
+int VIDEO_TILES = VIDEO_TILE_WIDTH * VIDEO_TILE_HEIGHT;
+
+int PALETTE_START = VIDEO_TILE_WIDTH * VIDEO_TILE_HEIGHT;
+int PALETTE_SIZE  = 16;
+
+int VIDEO_MEMORY_SIZE = VIDEO_TILES + PALETTE_SIZE;
+
+int VIDEO_PIXEL_WIDTH  = 640;
+int VIDEO_PIXEL_HEIGHT = 480;
+
+
+/*  TILE INDEX WRITE - Write a value to a specific tile in video memory
+    
+    Args:
+     * Tile  - Tile index to write to
+     * Value - Value to write
+
+    Returns:
+     bool - returns false if given an invalid tile
+*/
+
+int tile_index_write(long value int tile) {
+    if (tile >= VIDEO_TILES) return 0;
+
+    vga_write(value tile);
+    return 1;
+}
+
+
+/*  TILE COORDINATE WRITE - Write a value to a specific tile in video memory
+    
+    Args:
+     * Tile x - Tile x index to write to
+     * Tile y - Tile y index to write to
+     * Value  - Value to write
+
+    Returns:
+     bool - returns false if given an invalid tile
+*/
+
+int tile_coord_write(long value int x int y) {
+    if ((x >= VIDEO_PIXEL_WIDTH) | (y >= VIDEO_PIXEL_HEIGHT)) return 0;
+
+    int addr = x + (VIDEO_PIXEL_WIDTH * y);
+
+    vga_write(value addr);
+    return 1;
+}
+
+/*  PALETTE INDEX WRITE - Write a value to a specific palette index in video memory
+    
+    Args:
+     * Index    - Tile x index to write to
+     * FG value - Foreground color
+     * BG value - Background color
+
+    Returns:
+     void -
+*/
+
+int palette_index_write(int index char fg char bg) {
+    if (index >= VIDEO_TILES) return 0;
+
+    int addr = PALETTE_START + index;
+    long value = fg;
+    // TODO Uncomment when shifts are available
+    //value = fg << 8;
+    value = value + bg;
+
+    vga_write(value addr);
+    return 1;
+}

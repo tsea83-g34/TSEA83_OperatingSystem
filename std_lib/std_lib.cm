@@ -1,0 +1,121 @@
+/*
+C-- STANDARD LIB
+
+Includes features:
+
+ Statics:
+  - Constants
+
+ Raw:
+  - In
+  - Out
+  - Video memory access
+
+ Utility:
+  - Bounds
+ 
+ Compund:
+  - Tile write
+  - Buffer output
+  - Palette access
+  - Print
+  - String
+
+*/
+
+// =========== Constants ===========
+int MEMORY_SIZE = 4096;
+
+// ============== RAW ==============
+
+/*  IN - Return the value at port
+    
+    Args:
+     * Port - Index of port to read
+
+    Returns:
+     long - Port value
+*/
+
+long in(int port) {
+    long ret;
+    //TODO Uncomment when inline assemby available
+    //asm("in $, $" ret port);
+    return ret;
+}
+
+/*  OUT - Outputs a value to the port
+    
+    Args:
+     * Port - Index of port to read
+
+    Returns:
+     void -
+*/
+
+int out(long value int port) {
+    //TODO Uncomment when inline assemby available
+    //asm("out $, $" port value);
+}
+
+/*  VGA WRITE - Write a value to video memory
+    
+    Args:
+     * Addr  - Memory address to write to
+     * Value - Value to write
+
+    Returns:
+     void -
+*/
+
+int vga_write(long value int addr) {
+    //TODO Uncomment when inline assemby available
+    //asm("vgaw $, $" addr value);
+}
+
+// ============ Utility ============
+
+/*  OUTSIDE BOUND - Check if a value is between two other values
+    
+    Args:
+     * Value - Value to check
+     * Low   - Lower bound (inclusive)
+     * High  - Higher bound (exclusive)
+
+    Returns:
+     bool - returns false if given value is inside of the bounds
+*/
+
+int outside_bound(int value int low int high) {
+    return (value >= high) | (value < low);
+}
+
+/*  DIVIDE - Divide two numbers to get the whole number division and rest
+             NOTE: Costly operation!
+    
+    Args:
+     * Numerator   - 
+     * Denomenator -
+
+    Returns:
+     long - High bytes represent the division and low bytes represent the rest
+*/
+
+int divide(int num int den) {
+    // NOTE: This could be shortened to remove temporary variable rest
+    int rest = num;
+    int div  = 0;
+
+    while (rest > den) {
+        rest -= den;
+        div += 1;
+    }
+
+    // Format output
+    long ret = div;
+    // TODO Uncomment when shifting is available
+    // ret << 16;
+    ret += rest;
+
+    return ret;
+}

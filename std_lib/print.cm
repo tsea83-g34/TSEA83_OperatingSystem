@@ -1,0 +1,157 @@
+/*
+C-- STANDARD LIB PRINT
+
+Requires:
+ - STD_LIB
+ - VIDEO
+*/
+
+// TEXT BUFFER GLOBALS
+// (color must be a value between 0 and 15)
+char FG_COLOR = 0;
+char BG_COLOR = 0;
+
+int  CURSOR   = 0;
+int  CURSOR_X = 0;
+int  CURSOR_Y = 0;
+
+/*  ADVANCE CURSOR - Advance the cursor one step
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int advance_cursor() {
+     CURSOR += 1;
+     // Still inside bounds, update x, y
+     if (CURSOR < VIDEO_TILES) {
+          CURSOR_X += 1;
+
+          if (CURSOR_X >= VIDEO_TILE_WIDTH) {
+               CURSOR_X  = 0;
+               CURSOR_Y += 1;
+          }
+     }
+     // Outside screen bounds, reset!
+     else {
+          CURSOR   = 0;
+          CURSOR_X = 0;
+          CURSOR_Y = 0;
+     }
+}
+
+/*  ADVANCE STEPS - Advance the cursor a specified number of steps
+                    NOTE: Costly operation!
+    
+    Args:
+     - Steps - Number of steps to advance (less than VIDEO_TILES)
+
+    Returns:
+     void -
+*/
+int advance_steps(int steps) {
+     CURSOR += steps;
+
+     // Outside screen bounds, reset!
+     if (CURSOR >= VIDEO_TILES) CURSOR -= VIDEO_TILES;
+
+     long width_divide  = divide(CURSOR VIDEO_TILES_WIDTH);
+     long height_divide = divide(CURSOR VIDEO_TILES_HEIGHT);
+
+     CURSOR_X = width_divide  >> 16;
+     CURSOR_Y = height_divide >> 16;
+}
+
+/*  ADVANCE LINE - Advance the cursor one line
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int advance_line() {
+     CURSOR_Y += 1;
+
+     if (CURSOR_Y < VIDEO_TILES_HEIGHT) {
+          CURSOR = VIDEO_TILES_WIDTH * CURSOR_Y;
+     }
+     // Outside screen bounds, reset!
+     else {
+          CURSOR   = 0;
+          CURSOR_Y = 0;
+     }
+     CURSOR_X = 0;
+}
+
+/*  PRINT C - Write a char to the screen at the current position and 
+              move the cursor.
+    
+    Args:
+     * Char - Char to output
+
+    Returns:
+     bool - returns false if invalid color is given
+*/
+int print_c(char c) {
+
+    if ((FG_COLOR >= PALETTE_SIZE) | (BG_COLOR >= PALETTE_SIZE)) return 0;
+
+    // Build value according to the convetion:
+    //     char        fg     bg
+    // [     8     ][  4  ][  4  ]
+
+    // Color
+    int color = FG_COLOR;
+    // TODO Uncomment when shifts are available
+    //color << 4;
+    color += BG_COLOR;
+
+    // Char
+    int value = c;
+    // TODO Uncomment when shifts are available
+    //value = value << 8;
+    value += color;
+
+    // Write and advance cursor
+    tile_index_write(value CURSOR);
+    CURSOR += 1;
+
+    // Wrap cursor if outside of available screen
+    if (CURSOR >= VIDEO_TILES) CURSOR = 0;
+
+    return 1;
+}
+
+/*  PRINT - Write a char buffer to the screen at the current position and 
+            move the cursor.
+    
+    Args:
+     * Char   - Char buffer to output
+     * Length - Length of buffer
+
+    Returns:
+     bool - returns false if invalid color is given
+*/
+int print(int lenght char cb) {
+     int i = 0;
+     while (i < lenght) {
+          print_c(*cb)
+          cb += 1;
+     }
+}
+
+/*  CLEAR - Clear the screen and reset the cursor
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int clear() {
+     int i = 0;
+     while(i < VIDEO_TILES) {
+          tile_index_write(0 i);
+     }
+     CURSOR = 0;
+}
