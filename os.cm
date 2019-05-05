@@ -1,0 +1,32 @@
+/*
+TSEA83 PROJECT OS
+
+Basic os and terminal program for TSEA83 Computer design course at
+Linköpings Universitet written in the propriotary C-based language C--.
+*/
+
+#include user_programs/user_programs.cm
+#include std_lib/std_lib.cm
+
+int main() {
+
+    // Clear out memory
+
+    int i = 0;
+    while (i < MEMORY_SIZE) {
+        *i = 0;
+    }
+
+    // Keyboard read loop
+    while(1) {
+        keyboard = read_char();
+
+        // New input
+        if (keyboard != 0) {
+            // Output the character
+            // (Note that this should cut keyboard to char length)
+            print_c(keyboard);
+        }
+    }
+
+}
