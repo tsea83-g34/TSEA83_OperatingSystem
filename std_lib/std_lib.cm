@@ -107,15 +107,15 @@ int divide(int num int den) {
     int div  = 0;
 
     while (rest > den) {
-        rest -= den;
-        div += 1;
+        rest = rest - den;
+        div  = div + 1;
     }
 
     // Format output
     long ret = div;
     // TODO Uncomment when shifting is available
     // ret << 16;
-    ret += rest;
+    ret = ret + rest;
 
     return ret;
 }

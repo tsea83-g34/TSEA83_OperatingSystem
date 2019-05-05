@@ -23,14 +23,14 @@ int  CURSOR_Y = 0;
      void -
 */
 int advance_cursor() {
-     CURSOR += 1;
+     CURSOR = CURSOR + 1;
      // Still inside bounds, update x, y
      if (CURSOR < VIDEO_TILES) {
-          CURSOR_X += 1;
+          CURSOR_X = CURSOR_X + 1;
 
           if (CURSOR_X >= VIDEO_TILE_WIDTH) {
-               CURSOR_X  = 0;
-               CURSOR_Y += 1;
+               CURSOR_X = 0;
+               CURSOR_Y = CURSOR_Y + 1;
           }
      }
      // Outside screen bounds, reset!
@@ -51,10 +51,10 @@ int advance_cursor() {
      void -
 */
 int advance_steps(int steps) {
-     CURSOR += steps;
+     CURSOR = CURSOR + steps;
 
      // Outside screen bounds, reset!
-     if (CURSOR >= VIDEO_TILES) CURSOR -= VIDEO_TILES;
+     if (CURSOR >= VIDEO_TILES) CURSOR = CURSOR - VIDEO_TILES;
 
      long width_divide  = divide(CURSOR VIDEO_TILES_WIDTH);
      long height_divide = divide(CURSOR VIDEO_TILES_HEIGHT);
@@ -71,7 +71,7 @@ int advance_steps(int steps) {
      void -
 */
 int advance_line() {
-     CURSOR_Y += 1;
+     CURSOR_Y = CURSOR_Y + 1;
 
      if (CURSOR_Y < VIDEO_TILES_HEIGHT) {
           CURSOR = VIDEO_TILES_WIDTH * CURSOR_Y;
@@ -105,17 +105,17 @@ int print_c(char c) {
     int color = FG_COLOR;
     // TODO Uncomment when shifts are available
     //color << 4;
-    color += BG_COLOR;
+    color = color + BG_COLOR;
 
     // Char
     int value = c;
     // TODO Uncomment when shifts are available
     //value = value << 8;
-    value += color;
+    value = value + color;
 
     // Write and advance cursor
     tile_index_write(value CURSOR);
-    CURSOR += 1;
+    CURSOR = CURSOR + 1;
 
     // Wrap cursor if outside of available screen
     if (CURSOR >= VIDEO_TILES) CURSOR = 0;
@@ -137,7 +137,7 @@ int print(int lenght char cb) {
      int i = 0;
      while (i < lenght) {
           print_c(*cb)
-          cb += 1;
+          cb = cb + 1;
      }
 }
 
