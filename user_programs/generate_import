@@ -1,0 +1,21 @@
+#!/bin/bash
+
+rm user_programs.cm
+
+for file in *; do
+    # remove edge cases
+    [ -e "$file" ] || continue
+
+    # remove ignored files
+    [ $file = "generate_import" ] && continue
+
+    # Build files string
+    files="${file} ${files}"
+
+    echo $file
+    echo "#include ${file};" >> user_programs.cm
+done
+
+# Add file name string
+echo '' >> user_programs.cm
+echo "char[] FILES =  \"${files}\";" >> user_programs.cm
