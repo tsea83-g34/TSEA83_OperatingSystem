@@ -15,8 +15,8 @@ int main() {
     while(1) {
         keyboard = read_char();
 
-        // New input
-        if (keyboard != 0) {
+        // If new value => keyboard != 0
+        if (keyboard) {
             // Output the character
             // (Note that this should cut keyboard to char length)
             print_c(keyboard);
