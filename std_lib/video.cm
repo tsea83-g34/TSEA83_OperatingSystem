@@ -10,7 +10,7 @@ int VIDEO_TILE_WIDTH  = 40;
 int VIDEO_TILE_HEIGHT = 30;
 int VIDEO_TILES = VIDEO_TILE_WIDTH * VIDEO_TILE_HEIGHT;
 
-int PALETTE_START = VIDEO_TILE_WIDTH * VIDEO_TILE_HEIGHT;
+int PALETTE_START = VIDEO_TILES;
 int PALETTE_SIZE  = 16;
 
 int VIDEO_MEMORY_SIZE = VIDEO_TILES + PALETTE_SIZE;
@@ -69,7 +69,7 @@ int tile_coord_write(long value int x int y) {
 */
 
 int palette_index_write(int index char fg char bg) {
-    if (index >= VIDEO_TILES) return 0;
+    if (index >= PALETTE_SIZE) return 0;
 
     int addr = PALETTE_START + index;
     long value = fg;
