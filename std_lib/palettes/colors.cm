@@ -1,0 +1,41 @@
+/*
+C-- STANDARD LIB COLORS
+
+Requires:
+*/
+
+// Basic
+char PURE_BLACK = 0;
+char DARK_GRAY  = 73;
+char LIGHT_GRAY = 146;
+char PURE_WHITE = 255;
+
+// Pure color
+char PURE_RED    = 224;
+char PURE_ORANGE = 240;
+char PURE_YELLOW = 252;
+char PURE_LIME   = 156;
+char PURE_GREEN  = 28;
+char PURE_TEAL   = 30;
+char PURE_AZURE  = 31;
+char PURE_BLUE   = 19;
+char PURE_MARINE = 3;
+char PURE_PURPLE = 131;
+char PURE_PINK   = 227;
+
+// TempleOS
+char TEMPLE_BLUE   = 95;
+char TEMPLE_YELLOW = 253;
+char TEMPLE_GREEN  = 190;
+
+char TEMPLE_BLUE_DARK   = 45;
+char TEMPLE_YELLOW_DARK = 108;
+char TEMPLE_GREEN_DARK  = 77;
+
+// Atom ONE dark
+char ATOM_PINK  = 207;
+char ATOM_GRAY  = 36;
+char ATOM_GREEN = 118;
+char ATOM_WHITE = 182;
+char ATOM_BLUE  = 87;
+char ATOM_RED   = 233;
