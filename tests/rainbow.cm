@@ -1,0 +1,33 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic test program that outputs nul characters to the screen in cycling colors.
+*/
+
+#include ../std_lib/std_lib.cm
+#include ../std_lib/video.cm
+#include ../std_lib/print.cm
+#include ../std_lib/palettes/colors.cm
+#include ../std_lib/palettes/palettes.cm
+
+int main() {
+    
+    int index = 0;
+    int color = 0;
+    
+    // Print loop
+    while(index < VIDEO_TILES) {
+        //Only count the 11 colors
+        if (color >= 11) color = 0;
+
+        // Set color
+        BG_COLOR = 4 + color;
+
+        // Output nul character
+        print_c(0);
+
+        index = index + 1;
+        color = color + 1;
+        
+    }
+}
