@@ -106,9 +106,8 @@ int advance_steps(int steps) {
     long width_divide  = divide(CURSOR VIDEO_TILE_WIDTH);
     long height_divide = divide(CURSOR VIDEO_TILE_HEIGHT);
 
-    // TODO Uncomment when shifts are available
-    //CURSOR_X = width_divide  >> 16;
-    //CURSOR_Y = height_divide >> 16;
+    CURSOR_X = left_shift_l(width_divide  16);
+    CURSOR_Y = left_shift_l(height_divide 16);
     return 1;
 }
 
@@ -193,14 +192,12 @@ int print_c_at(char c char pos) {
 
     // Color
     int color = FG_COLOR;
-    // TODO Uncomment when shifts are available
-    //color << 4;
+    color = left_shift_i(color 4);
     color = color + BG_COLOR;
 
     // Char
     int value = c;
-    // TODO Uncomment when shifts are available
-    //value = value << 8;
+    value = left_shift_i(value 8);
     value = value + color;
 
     // Write and advance cursor

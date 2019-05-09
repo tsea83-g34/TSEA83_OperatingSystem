@@ -110,8 +110,7 @@ int divide(int num int den) {
 
     // Format output
     long ret = div;
-    // TODO Uncomment when shifting is available
-    // ret << 16;
+    ret = left_shift_l(ret 16);
     ret = ret + rest;
 
     return ret;

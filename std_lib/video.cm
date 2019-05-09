@@ -3,6 +3,7 @@ C-- STANDARD LIB VIDEO
 
 Requires:
  - STD_LIB
+ - SHIFT
 */
 
 // =========== Constants ===========
@@ -73,8 +74,7 @@ int palette_index_write(int index char fg char bg) {
 
     int addr = PALETTE_START + index;
     long value = fg;
-    // TODO Uncomment when shifts are available
-    //value = fg << 8;
+    value = left_shift_l(fg 8);
     value = value + bg;
 
     vga_write(value addr);
