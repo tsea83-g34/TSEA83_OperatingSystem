@@ -4,6 +4,7 @@ C-- STANDARD LIB PRINT
 Requires:
  - STD_LIB
  - VIDEO
+ - MATH
 */
 
 // TEXT BUFFER GLOBALS
