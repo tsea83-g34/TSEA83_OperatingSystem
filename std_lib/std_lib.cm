@@ -86,32 +86,3 @@ int vga_write(long value int addr) {
 int outside_bound(int value int low int high) {
     return (value >= high) | (value < low);
 }
-
-/*  DIVIDE - Divide two numbers to get the whole number division and rest
-             NOTE: Costly operation!
-    
-    Args:
-     * Numerator   - 
-     * Denomenator -
-
-    Returns:
-     long - High bytes represent the division and low bytes represent the rest
-*/
-
-int divide(int num int den) {
-    // NOTE: This could be shortened to remove temporary variable rest
-    int rest = num;
-    int div  = 0;
-
-    while (rest > den) {
-        rest = rest - den;
-        div  = div + 1;
-    }
-
-    // Format output
-    long ret = div;
-    ret = left_shift_l(ret 16);
-    ret = ret + rest;
-
-    return ret;
-}
