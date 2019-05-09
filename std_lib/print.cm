@@ -127,7 +127,7 @@ int advance_line() {
     }
     // Outside screen bounds, reset!
     else {
-        CURSOR   = 0;
+        CURSOR   = CURSOR_X;
         CURSOR_Y = 0;
     }
 }
@@ -147,7 +147,7 @@ int back_line() {
     }
     // Outside screen bounds, reset!
     else {
-        CURSOR   = VIDEO_TILES - 1;
+        CURSOR   = CURSOR_X;
         CURSOR_Y = VIDEO_TILE_HEIGHT;
     }
     CURSOR_X = 0;
