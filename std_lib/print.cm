@@ -15,6 +15,25 @@ int  CURSOR   = 0;
 int  CURSOR_X = 0;
 int  CURSOR_Y = 0;
 
+/*  SET CURSOR - Set the cursor to a given pos
+    
+    Args:
+     * X - X position
+     * Y - Y position
+
+    Returns:
+     bool - false if given an illegal position
+*/
+int set_cursor(char x char y) {
+    if ((x >= VIDEO_TILE_WIDTH) | (y >= VIDEO_TILE_HEIGHT)) return 0;
+
+    CURSOR_X = x;
+    CURSOR_Y = y;
+    CURSOR   = x + y * VIDEO_TILE_WIDTH;
+
+    return 1;
+}
+
 /*  ADVANCE CURSOR - Advance the cursor one step
     
     Args:
@@ -23,22 +42,48 @@ int  CURSOR_Y = 0;
      void -
 */
 int advance_cursor() {
-     CURSOR = CURSOR + 1;
-     // Still inside bounds, update x, y
-     if (CURSOR < VIDEO_TILES) {
-          CURSOR_X = CURSOR_X + 1;
+    CURSOR = CURSOR + 1;
+    // Still inside bounds, update x, y
+    if (CURSOR < VIDEO_TILES) {
+        CURSOR_X = CURSOR_X + 1;
 
-          if (CURSOR_X >= VIDEO_TILE_WIDTH) {
-               CURSOR_X = 0;
-               CURSOR_Y = CURSOR_Y + 1;
-          }
-     }
-     // Outside screen bounds, reset!
-     else {
-          CURSOR   = 0;
-          CURSOR_X = 0;
-          CURSOR_Y = 0;
-     }
+        if (CURSOR_X >= VIDEO_TILE_WIDTH) {
+            CURSOR_X = 0;
+            CURSOR_Y = CURSOR_Y + 1;
+        }
+    }
+    // Outside screen bounds, reset!
+    else {
+        CURSOR   = 0;
+        CURSOR_X = 0;
+        CURSOR_Y = 0;
+    }
+}
+
+/*  BACK CURSOR - Back the cursor one step
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int back_cursor() {
+    CURSOR = CURSOR - 1;
+    // Still inside bounds, update x, y
+    if (CURSOR < VIDEO_TILES) {
+        CURSOR_X = CURSOR_X - 1;
+
+        if (CURSOR_X < 0) {
+            CURSOR_X = 0;
+            CURSOR_Y = CURSOR_Y - 1;
+        }
+    }
+    // Outside screen bounds, reset!
+    else {
+        CURSOR   = VIDEO_TILES - 1;
+        CURSOR_X = VIDEO_TILE_WIDTH;
+        CURSOR_Y = VIDEO_TILE_HEIGHT;
+    }
 }
 
 /*  ADVANCE STEPS - Advance the cursor a specified number of steps
@@ -51,20 +96,20 @@ int advance_cursor() {
      bool - false if given illegal input
 */
 int advance_steps(int steps) {
-     if (steps >= VIDEO_TILES) return 0;
+    if (steps >= VIDEO_TILES) return 0;
 
-     CURSOR = CURSOR + steps;
+    CURSOR = CURSOR + steps;
 
-     // Outside screen bounds, reset!
-     if (CURSOR >= VIDEO_TILES) CURSOR = CURSOR - VIDEO_TILES;
+    // Outside screen bounds, reset!
+    if (CURSOR >= VIDEO_TILES) CURSOR = CURSOR - VIDEO_TILES;
 
-     long width_divide  = divide(CURSOR VIDEO_TILE_WIDTH);
-     long height_divide = divide(CURSOR VIDEO_TILE_HEIGHT);
+    long width_divide  = divide(CURSOR VIDEO_TILE_WIDTH);
+    long height_divide = divide(CURSOR VIDEO_TILE_HEIGHT);
 
-     // TODO Uncomment when shifts are available
-     //CURSOR_X = width_divide  >> 16;
-     //CURSOR_Y = height_divide >> 16;
-     return 1;
+    // TODO Uncomment when shifts are available
+    //CURSOR_X = width_divide  >> 16;
+    //CURSOR_Y = height_divide >> 16;
+    return 1;
 }
 
 /*  ADVANCE LINE - Advance the cursor one line
@@ -75,17 +120,38 @@ int advance_steps(int steps) {
      void -
 */
 int advance_line() {
-     CURSOR_Y = CURSOR_Y + 1;
+    CURSOR_Y = CURSOR_Y + 1;
 
-     if (CURSOR_Y < VIDEO_TILE_HEIGHT) {
-          CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
-     }
-     // Outside screen bounds, reset!
-     else {
-          CURSOR   = 0;
-          CURSOR_Y = 0;
-     }
-     CURSOR_X = 0;
+    if (CURSOR_Y < VIDEO_TILE_HEIGHT) {
+        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
+    }
+    // Outside screen bounds, reset!
+    else {
+        CURSOR   = 0;
+        CURSOR_Y = 0;
+    }
+    CURSOR_X = 0;
+}
+
+/*  BACK LINE - Back the cursor one line
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int back_line() {
+    CURSOR_Y = CURSOR_Y - 1;
+
+    if (CURSOR_Y >= 0) {
+        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
+    }
+    // Outside screen bounds, reset!
+    else {
+        CURSOR   = VIDEO_TILES - 1;
+        CURSOR_Y = VIDEO_TILE_HEIGHT;
+    }
+    CURSOR_X = 0;
 }
 
 /*  PRINT C AT - Write a char to the screen at the given position
@@ -169,14 +235,14 @@ int print_c(char c) {
      bool - returns false if invalid color is given
 */
 int print(int lenght int cb_p) {
-     // NOTE: This could be shortened to use the pointer as length counter, saving one operation per loop
-     int i = 0;
-     while (i < lenght) {
-          // TODO Uncomment when pointers are available
-          //print_c(*cb)
-          cb_p = cb_p + 1;
-          i = i + 1;
-     }
+    // NOTE: This could be shortened to use the pointer as length counter, saving one operation per loop
+    int i = 0;
+    while (i < lenght) {
+        // TODO Uncomment when pointers are available
+        //print_c(*cb)
+        cb_p = cb_p + 1;
+        i = i + 1;
+    }
 }
 
 /*  CLEAR - Clear the screen and reset the cursor
@@ -187,9 +253,9 @@ int print(int lenght int cb_p) {
      void -
 */
 int clear() {
-     int i = 0;
-     while(i < VIDEO_TILES) {
-          tile_index_write(0 i);
-     }
-     CURSOR = 0;
+    int i = 0;
+    while(i < VIDEO_TILES) {
+        tile_index_write(0 i);
+    }
+    CURSOR = 0;
 }
