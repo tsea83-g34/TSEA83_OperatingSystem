@@ -123,14 +123,13 @@ int advance_line() {
     CURSOR_Y = CURSOR_Y + 1;
 
     if (CURSOR_Y < VIDEO_TILE_HEIGHT) {
-        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
+        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y + CURSOR_X;
     }
     // Outside screen bounds, reset!
     else {
         CURSOR   = 0;
         CURSOR_Y = 0;
     }
-    CURSOR_X = 0;
 }
 
 /*  BACK LINE - Back the cursor one line
@@ -150,6 +149,27 @@ int back_line() {
     else {
         CURSOR   = VIDEO_TILES - 1;
         CURSOR_Y = VIDEO_TILE_HEIGHT;
+    }
+    CURSOR_X = 0;
+}
+
+/*  NEW LINE - Advance the cursor to the next line
+    
+    Args:
+
+    Returns:
+     void -
+*/
+int new_line() {
+    CURSOR_Y = CURSOR_Y + 1;
+
+    if (CURSOR_Y < VIDEO_TILE_HEIGHT) {
+        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
+    }
+    // Outside screen bounds, reset!
+    else {
+        CURSOR   = 0;
+        CURSOR_Y = 0;
     }
     CURSOR_X = 0;
 }
