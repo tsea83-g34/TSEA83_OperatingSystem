@@ -5,7 +5,7 @@ Requires:
  - STD_LIB
 */
 
-/*  READ CHAR - Read the next character from the keyboard
+/*  READ KEYBOARD - Read the next value from the keyboard
     
     Args:
 
@@ -13,7 +13,28 @@ Requires:
      long - Keyboard value (if new!)
 */
 
-long read_char() {
+long read_keyboard() {
+    long kbv = in(0);
+
+    //TODO Change to hex when available
+    // Mask of the 12th bit, denoting a new value
+    long mask = 2048;
+
+    if (kbv & mask) {
+        return kbv;
+    }
+    //else return 0
+}
+
+/*  READ CHAR - Read the next character from the keyboard
+    
+    Args:
+
+    Returns:
+     char - Keyboard decoded char (if new!)
+*/
+
+char read_char() {
     long kbv = in(0);
 
     //TODO Change to hex when available
