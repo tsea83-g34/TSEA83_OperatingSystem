@@ -45,12 +45,14 @@ int advance_cursor() {
                     NOTE: Costly operation!
     
     Args:
-     - Steps - Number of steps to advance (less than VIDEO_TILES)
+     * Steps - Number of steps to advance (less than VIDEO_TILES)
 
     Returns:
-     void -
+     bool - false if given illegal input
 */
 int advance_steps(int steps) {
+     if (steps >= VIDEO_TILES) return 0;
+
      CURSOR = CURSOR + steps;
 
      // Outside screen bounds, reset!
@@ -62,6 +64,7 @@ int advance_steps(int steps) {
      // TODO Uncomment when shifts are available
      //CURSOR_X = width_divide  >> 16;
      //CURSOR_Y = height_divide >> 16;
+     return 1;
 }
 
 /*  ADVANCE LINE - Advance the cursor one line
@@ -85,16 +88,16 @@ int advance_line() {
      CURSOR_X = 0;
 }
 
-/*  PRINT C - Write a char to the screen at the current position and 
-              move the cursor.
+/*  PRINT C AT - Write a char to the screen at the given position
     
     Args:
      * Char - Char to output
+     * Pos  - Position
 
     Returns:
-     bool - returns false if invalid color is given
+     bool - returns false if invalid color or position is given
 */
-int print_c(char c) {
+int print_c_at(char c char pos) {
 
     if ((FG_COLOR >= PALETTE_SIZE) | (BG_COLOR >= PALETTE_SIZE)) return 0;
 
@@ -115,13 +118,44 @@ int print_c(char c) {
     value = value + color;
 
     // Write and advance cursor
-    tile_index_write(value CURSOR);
-    CURSOR = CURSOR + 1;
+    return tile_index_write(value pos);
+}
 
-    // Wrap cursor if outside of available screen
-    if (CURSOR >= VIDEO_TILES) CURSOR = 0;
+/*  PRINT C AT POS - Write a char to the screen at the given position
+    
+    Args:
+     * Char - Char to output
+     * X    - X position
+     * Y    - Y position
 
-    return 1;
+    Returns:
+     bool - returns false if invalid color or position is given
+*/
+int print_c_at_pos(char c char x char y) {
+    return print_c_at(c x + VIDEO_TILE_WIDTH * y);
+}
+
+/*  PRINT C - Write a char to the screen at the current position and 
+              move the cursor.
+    
+    Args:
+     * Char - Char to output
+
+    Returns:
+     bool - returns false if invalid color is given
+*/
+int print_c(char c) {
+
+    // Write char and advance cursor
+    if (print_c_at(c CURSOR)) {
+        CURSOR = CURSOR + 1;
+        
+        // Wrap cursor if outside of available screen
+        if (CURSOR >= VIDEO_TILES) CURSOR = 0;
+
+        return 1;
+    }
+    return 0;
 }
 
 /*  PRINT - Write a char buffer to the screen at the current position and 
