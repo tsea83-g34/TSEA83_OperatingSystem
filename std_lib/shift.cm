@@ -1,0 +1,114 @@
+/*
+C-- STANDARD LIB SHIFT
+
+Requires:
+*/
+
+// ========================== Long ==========================
+
+/*  LEFT SHIFT (long) - Shift left
+    
+    Args:
+     * X     - Number to shift (long)
+     * Steps - Steps to shift
+
+    Returns:
+     long - Shifted number
+*/
+long left_shift_l(long x int steps) {
+    while(steps > 0) {
+        asm("lsl[4] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
+
+/*  RIGHT SHIFT (long) - Shift right
+    
+    Args:
+     * X     - Number to shift (long)
+     * Steps - Steps to shift
+
+    Returns:
+     long - Shifted number
+*/
+long right_shift_l(long x int steps) {
+    while(steps > 0) {
+        asm("lsr[4] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
+
+// ========================== Int ==========================
+
+/*  LEFT SHIFT (int) - Shift left
+    
+    Args:
+     * X     - Number to shift (int)
+     * Steps - Steps to shift
+
+    Returns:
+     int - Shifted number
+*/
+int left_shift_i(int x int steps) {
+    while(steps > 0) {
+        asm("lsl[2] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
+
+/*  RIGHT SHIFT (int) - Shift right
+    
+    Args:
+     * X     - Number to shift (int)
+     * Steps - Steps to shift
+
+    Returns:
+     int - Shifted number
+*/
+int right_shift_l(int x int steps) {
+    while(steps > 0) {
+        asm("lsr[2] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
+
+// ========================== Char ==========================
+
+/*  LEFT SHIFT (char) - Shift left
+    
+    Args:
+     * X     - Number to shift (char)
+     * Steps - Steps to shift
+
+    Returns:
+     char - Shifted number
+*/
+
+int left_shift_c(char x int steps) {
+    while(steps > 0) {
+        asm("lsl[1] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
+
+/*  RIGHT SHIFT (char) - Shift right
+    
+    Args:
+     * X     - Number to shift (char)
+     * Steps - Steps to shift
+
+    Returns:
+     char - Shifted number
+*/
+char right_shift_l(char x int steps) {
+    while(steps > 0) {
+        asm("lsr[1] $, $" x x);
+        steps = steps - 1;
+    }
+    return x;
+}
