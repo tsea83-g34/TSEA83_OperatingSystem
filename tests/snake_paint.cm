@@ -1,0 +1,69 @@
+/*
+TSEA83 PROJECT TEST
+
+Snake paint - A graphics program with a drawing snake
+*/
+
+#include ../std_lib/std_lib.cm
+#include ../std_lib/video.cm
+#include ../std_lib/keyboard.cm
+#include ../std_lib/print.cm
+#include ../std_lib/palettes/colors.cm
+
+int main() {
+    // Load paint palette
+    palette_index_write(1 PURE_RED    PURE_RED);
+    palette_index_write(2 PURE_ORANGE PURE_ORANGE);
+    palette_index_write(3 PURE_YELLOW PURE_YELLOW);
+    palette_index_write(4 PURE_LIME   PURE_LIME);
+    palette_index_write(5 PURE_GREEN  PURE_GREEN);
+    palette_index_write(6 PURE_AZURE  PURE_AZURE);
+    palette_index_write(7 PURE_BLUE   PURE_BLUE);
+    palette_index_write(8 PURE_MARINE PURE_MARINE);
+    palette_index_write(9 PURE_PURPLE PURE_PURPLE);
+    palette_index_write(0 PURE_PINK   PURE_PINK);
+
+    palette_index_write(10  LIGHT_GRAY  LIGHT_GRAY);
+    
+    // Set cursor color
+    FG_COLOR = 10;
+
+    // Keyboard read loop
+    long keyboard = 0;
+    while(1) {
+        keyboard = read_char();
+
+        // If new value => keyboard != 0
+        if (keyboard) {
+            
+            // Movement
+            if (keyboard == 'w') {
+                print_c_at(' ' CURSOR);
+                back_line();
+                print_c_at('+' CURSOR);
+            }
+            else if (keyboard == 'a') {
+                print_c_at(' ' CURSOR);
+                back_cursor();
+                print_c_at('+' CURSOR);
+            }
+            else if (keyboard == 's') {
+                print_c_at(' ' CURSOR);
+                advance_line();
+                print_c_at('+' CURSOR);
+            }
+            else if (keyboard == 'd') {
+                print_c_at(' ' CURSOR);
+                advance_cursor();
+                print_c_at('+' CURSOR);
+            }
+
+            // Change color
+            // (Key 0 to 9)
+            else if ((keyboard >= 48) & (keyboard <= 57)) {
+                BG_COLOR = keyboard - 48;
+                print_c_at('+' CURSOR);
+            }
+        }
+    }
+}
