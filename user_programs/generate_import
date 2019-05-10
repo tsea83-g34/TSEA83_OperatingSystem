@@ -5,10 +5,10 @@
 # Run with './generate_import' in user_programs folder
 #
 # All user programs must:
-#  - End in '.cm'
+#  - End in '.cmm'
 #  - Have their main function be called the same as name as the file
 
-rm user_programs.cm
+rm user_programs.cmm
 
 count=0
 
@@ -26,7 +26,7 @@ for file in *; do
     include_string=${include_string}"\n#include ${file};"
 
     # Build function string
-    function_string=${function_string}"if (program == ${count}) {\n\t\t${file::-3}();\n\t}\n\telse "
+    function_string=${function_string}"if (program == ${count}) {\n\t\t${file::-4}();\n\t}\n\telse "
 
     # Count programs
     ((count++))
@@ -34,13 +34,13 @@ for file in *; do
 done
 
 # Add includes
-echo -e $include_string >> user_programs.cm
-echo '' >> user_programs.cm
+echo -e $include_string >> user_programs.cmm
+echo '' >> user_programs.cmm
 
 # Add constants
-echo -e "char[] USER_PROGRAMS = \"${files_string}\";" >> user_programs.cm
-echo -e "int USER_PROGRAM_COUNT = ${count};" >> user_programs.cm
+echo -e "char[] USER_PROGRAMS = \"${files_string}\";" >> user_programs.cmm
+echo -e "int USER_PROGRAM_COUNT = ${count};" >> user_programs.cmm
 
 # Add functions
-echo '' >> user_programs.cm
-echo -e "int call_user_program(int program) {\n\t"$function_string"{}\n}" >> user_programs.cm
+echo '' >> user_programs.cmm
+echo -e "int call_user_program(int program) {\n\t"$function_string"{}\n}" >> user_programs.cmm

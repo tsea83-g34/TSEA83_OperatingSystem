@@ -5,10 +5,10 @@ Basic os and terminal program for TSEA83 Computer design course at
 Linköpings Universitet written in the propriotary C-based language C--.
 */
 
-#include std_lib/std_lib.cm
-#include std_lib/keyboard.cm
-#include std_lib/string.cm
-#include user_programs/user_programs.cm
+#include std_lib/std_lib.cmm
+#include std_lib/keyboard.cmm
+#include std_lib/string.cmm
+#include user_programs/user_programs.cmm
 
 int main() {
     
