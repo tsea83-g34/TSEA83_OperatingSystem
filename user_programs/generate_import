@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# GENERATE IMPORT
+# 
+# Run with './generate_import' in user_programs folder
+#
+# All user programs must:
+#  - End in '.cm'
+#  - Have their main function be called the same as name as the file
+
 rm user_programs.cm
 
 count=0
