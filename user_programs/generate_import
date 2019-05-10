@@ -2,6 +2,8 @@
 
 rm user_programs.cm
 
+count=0
+
 for file in *; do
     # remove edge cases
     [ -e "$file" ] || continue
@@ -10,12 +12,27 @@ for file in *; do
     [ $file = "generate_import" ] && continue
 
     # Build files string
-    files="${file} ${files}"
+    files_string=${file}'\0'${files_string}
 
-    echo $file
-    echo "#include ${file};" >> user_programs.cm
+    # Build include string
+    include_string=${include_string}"\n#include ${file};"
+
+    # Build function string
+    function_string=${function_string}"if (program == ${count}) {\n\t\t${file::-3}();\n\t}\n\telse "
+
+    # Count programs
+    ((count++))
+
 done
 
-# Add file name string
+# Add includes
+echo -e $include_string >> user_programs.cm
 echo '' >> user_programs.cm
-echo "char[] FILES =  \"${files}\";" >> user_programs.cm
+
+# Add constants
+echo -e "char[] USER_PROGRAMS = \"${files_string}\";" >> user_programs.cm
+echo -e "int USER_PROGRAM_COUNT = ${count};" >> user_programs.cm
+
+# Add functions
+echo '' >> user_programs.cm
+echo -e "int call_user_program(int program) {\n\t"$function_string"{}\n}" >> user_programs.cm
