@@ -7,16 +7,36 @@ Linköpings Universitet written in the propriotary C-based language C--.
 
 #include std_lib/std_lib.cm
 #include std_lib/keyboard.cm
+#include std_lib/string.cm
 #include user_programs/user_programs.cm
 
 int main() {
-    while(1) {
-        // Setup buffer
-        char input_buffer[40];
-        int  index = 0;
+    
+    // Setup buffer
+    char input_buffer[40];
+    int  index;
 
-        // Buffer decoding variable
-        int buildning_buffer = 1
+    // Init keyboard
+    int keyboard;
+
+    // Buffer decoding variable
+    int buildning_buffer;
+    
+    // Program names buffer
+    char* programs_buff;
+    int program_index;
+
+    // Program searching variable
+    int searching;
+
+    // String lenght variable
+    int length;
+
+    while(1) {
+        // =========== Decode input ===========
+        index = 0;
+        keyboard = 0;
+        buildning_buffer = 1;
 
         // Keyboard read loop
         while(buildning_buffer) {
@@ -26,16 +46,41 @@ int main() {
             if (keyboard != 0) {
                 // Enter, decode the buffer
                 if (keyboard == '\n') {
-                    input_buffer[i] = '\0';
-                    buildning_buffer = 1
+                    input_buffer[index] = '\0';
+                    buildning_buffer = 0;
+                }
+                else {
+                    input_buffer[index] = keyboard;
+                    index = index + 1;
                 }
             }
         }
 
-        // Find program index
+        // =========== Find program index ===========
+        // Copy pointer to user program files buffer
+        programs_buff = USER_PROGRAMS;
 
-        // Call function
+        program_index = 0;
+        searching = 1;
 
-        // Reset everyting
+        while((program_index < USER_PROGRAM_COUNT) & searching) {
+
+            // Input matched program name
+            if (!string_compare(input_buffer programs_buff)) {
+                searching = 0;
+            }
+            // Countinue to next string
+            else {
+                length = string_length(programs_buff);
+                programs_buff = programs_buff + length;
+                program_index = program_index + 1;
+            }
+        }
+
+        // =========== Call function ===========
+        // Found program
+        if (program_index != USER_PROGRAM_COUNT) {
+            call_user_program(program_index);
+        }
     }
 }
