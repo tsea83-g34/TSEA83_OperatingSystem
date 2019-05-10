@@ -1,0 +1,41 @@
+/*
+C-- STANDARD LIB STRING
+
+Requires:
+*/
+
+/*  STRING COMPARE - Compare two char buffers lexicographicaly
+    
+    Args:
+     * s1_p - Pointer to first char buffer
+     * s2_p - Pointer to second char buffer
+
+    Returns:
+     int - 0 if equal, positive if s1 is after s2 in lexicographical order, otherwise
+           negative. Value denotes distance between first differing chars.
+           
+*/
+int string_compare(char* s1_p char* s2_p) {
+    while(*s1_p == *s2_p) {
+        if (*s1_p == '\0') return 0;
+        s1_p = s1_p + 1;
+        s2_p = s2_p + 1;
+    }
+    return *s1_p - *s2_p;
+}
+
+/*  STRING LENGTH - Length of a char buffer
+    
+    Args:
+     * s_p - Pointer to char buffer
+
+    Returns:
+     int - Length of char buffer
+*/
+int string_length(char* s_p) {
+    char* start = s_p;
+    while(*s_p != '\0') {
+        s_p = s_p + 1;
+    }
+    return s_p - start;
+}
