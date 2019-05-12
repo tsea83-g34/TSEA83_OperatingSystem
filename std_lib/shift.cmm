@@ -68,7 +68,7 @@ int left_shift_i(int x int steps) {
     Returns:
      int - Shifted number
 */
-int right_shift_l(int x int steps) {
+int right_shift_i(int x int steps) {
     while(steps > 0) {
         asm("lsr[2] $, $" x x);
         steps = steps - 1;
@@ -105,7 +105,7 @@ int left_shift_c(char x int steps) {
     Returns:
      char - Shifted number
 */
-char right_shift_l(char x int steps) {
+char right_shift_c(char x int steps) {
     while(steps > 0) {
         asm("lsr[1] $, $" x x);
         steps = steps - 1;
