@@ -5,6 +5,8 @@ Basic test program that outputs nul characters to the screen in cycling colors.
 */
 
 #include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
 #include ../std_lib/video.cmm
 #include ../std_lib/print.cmm
 #include ../std_lib/palettes/colors.cmm
@@ -14,6 +16,8 @@ int main() {
     
     int index = 0;
     int color = 0;
+
+    load_basic_palette();
     
     // Print loop
     while(index < VIDEO_TILES) {
