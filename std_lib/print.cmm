@@ -107,8 +107,8 @@ int advance_steps(int steps) {
     long width_divide  = divide(CURSOR VIDEO_TILE_WIDTH);
     long height_divide = divide(CURSOR VIDEO_TILE_HEIGHT);
 
-    CURSOR_X = left_shift_l(width_divide  16);
-    CURSOR_Y = left_shift_l(height_divide 16);
+    CURSOR_X = right_shift_l(width_divide  16);
+    CURSOR_Y = right_shift_l(height_divide 16);
     return 1;
 }
 
