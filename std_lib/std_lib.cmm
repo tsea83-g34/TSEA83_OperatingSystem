@@ -29,6 +29,7 @@ int MEMORY_SIZE = 4096;
 // ============== RAW ==============
 
 /*  IN - Return the value at port
+         (Currently ignores port argument, always reads from port 0)
     
     Args:
      * Port - Index of port to read
@@ -39,12 +40,12 @@ int MEMORY_SIZE = 4096;
 
 long in(int port) {
     long ret;
-    asm ("in $, $" ret port);
+    asm ("in $, 0" ret);
     return ret;
 }
 
 /*  OUT - Outputs a value to the port
-    
+          (Currently ignores port argument, always writes to port 0)
     Args:
      * Port - Index of port to read
 
@@ -53,7 +54,7 @@ long in(int port) {
 */
 
 int out(long value int port) {
-    asm ("out $, $" port value);
+    asm ("out 0, $" value);
 }
 
 /*  VGA WRITE - Write a value to video memory
@@ -67,7 +68,7 @@ int out(long value int port) {
 */
 
 int vga_write(long value int addr) {
-    asm ("vgaw $, $" addr value);
+    asm ("vgaw $, $, 0" addr value);
 }
 
 // ============ Utility ============
