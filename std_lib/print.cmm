@@ -246,20 +246,15 @@ int print_c(char c) {
             move the cursor.
     
     Args:
-     * Char   - Char buffer to output
-     * Length - Length of buffer
+     * Char - Char pointer to the buffer to output
 
     Returns:
      bool - returns false if invalid color is given
 */
-int print(int lenght int cb_p) {
-    // NOTE: This could be shortened to use the pointer as length counter, saving one operation per loop
-    int i = 0;
-    while (i < lenght) {
-        // TODO Uncomment when pointers are available
-        //print_c(*cb)
+int print(char* cb_p) {
+    while (*cb_p != '\0') {
+        print_c(*cb)
         cb_p = cb_p + 1;
-        i = i + 1;
     }
 }
 
@@ -275,5 +270,8 @@ int clear() {
     while(i < VIDEO_TILES) {
         tile_index_write(0 i);
     }
-    CURSOR = 0;
+    
+    CURSOR   = 0;
+    CURSOR_X = 0;
+    CURSOR_Y = 0;
 }
