@@ -39,3 +39,21 @@ int string_length(char* s_p) {
     }
     return s_p - start;
 }
+
+/*  STRING COPY - Copy a char buffer to a destination buffer
+
+    Args:
+     * s_p - Pointer to char buffer to copy
+     * d_p - Pointer to char buffer to copy into
+
+    Returns:
+     void -
+*/
+int string_copy(char* s_p char* d_p) {
+    while(*s_p != '\0') {
+        *d_p = *s_p;
+
+        s_p = s_p + 1;
+        d_p = d_p + 1;
+    }
+}
