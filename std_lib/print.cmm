@@ -188,17 +188,17 @@ int print_c_at(char c char pos) {
     if ((FG_COLOR >= PALETTE_SIZE) | (BG_COLOR >= PALETTE_SIZE)) return 0;
 
     // Build value according to the convetion:
-    //     char        fg     bg
-    // [     8     ][  4  ][  4  ]
+    //   fg     bg       char
+    // [  4  ][  4  ][     8     ]
 
     // Color
     int color = FG_COLOR;
     color = left_shift_i(color 4);
     color = color + BG_COLOR;
+    color = left_shift_i(color 8);
 
     // Char
     int value = c;
-    value = left_shift_i(value 8);
     value = value + color;
 
     // Write and advance cursor
@@ -253,7 +253,7 @@ int print_c(char c) {
 */
 int print(char* cb_p) {
     while (*cb_p != '\0') {
-        print_c(*cb)
+        print_c(*cb_p);
         cb_p = cb_p + 1;
     }
 }
@@ -270,7 +270,7 @@ int clear() {
     while(i < VIDEO_TILES) {
         tile_index_write(0 i);
     }
-    
+
     CURSOR   = 0;
     CURSOR_X = 0;
     CURSOR_Y = 0;
