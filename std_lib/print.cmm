@@ -248,7 +248,7 @@ int print_c(char c) {
      bool - returns false if invalid color is given
 */
 int print(char* cb_p) {
-    while (*cb_p != '\0') {
+    while (*cb_p) {
         print_c(*cb_p);
         cb_p = cb_p + 1;
     }
