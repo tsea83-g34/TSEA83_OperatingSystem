@@ -38,7 +38,7 @@ echo -e $include_string >> user_programs.cmm
 echo '' >> user_programs.cmm
 
 # Add constants
-echo -e "char[] USER_PROGRAMS = \"${files_string}\";" >> user_programs.cmm
+echo -e "char USER_PROGRAMS[] = \"${files_string}\";" >> user_programs.cmm
 echo -e "int USER_PROGRAM_COUNT = ${count};" >> user_programs.cmm
 
 # Add functions
