@@ -232,11 +232,7 @@ int print_c(char c) {
 
     // Write char and advance cursor
     if (print_c_at(c CURSOR)) {
-        CURSOR = CURSOR + 1;
-        
-        // Wrap cursor if outside of available screen
-        if (CURSOR >= VIDEO_TILES) CURSOR = 0;
-
+        advance_cursor();
         return 1;
     }
     return 0;
