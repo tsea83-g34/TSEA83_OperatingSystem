@@ -3,6 +3,7 @@ C-- STANDARD LIB KEYBOARD
 
 Requires:
  - STD_LIB
+ - SHIFT
 */
 
 /*  READ KEYBOARD - Read the next value from the keyboard
@@ -16,11 +17,16 @@ Requires:
 long read_keyboard() {
     long kbv = in(0);
 
-    //TODO Change to hex when available
     // Mask of the 12th bit, denoting a new value
-    long mask = 2048;
+    long new_masked = 0x1000 & kbv;
 
-    if (kbv & mask) {
+    // Mask of the 11th bit, denoting a MAKE
+    long make_masked = 0x0800 & kbv;
+
+    // Value is both new and a MAKE
+    // Shift one down to align with second mask
+    if (right_shift_l(new_masked 1) & make_masked){
+        // SIGN EXTEND? 
         return kbv;
     }
     //else return 0
@@ -37,12 +43,21 @@ long read_keyboard() {
 char read_char() {
     long kbv = in(0);
 
-    //TODO Change to hex when available
     // Mask of the 12th bit, denoting a new value
-    long mask = 2048;
+    long new_masked = 0x1000 & kbv;
 
-    if (kbv & mask) {
-        return kbv;
+    // Mask of the 11th bit, denoting a MAKE
+    long make_masked = 0x0800 & kbv;
+
+    // Shift one down to align with second mask
+    long shifted = right_shift_l(new_masked 1);
+
+    int i = 0;
+
+    // Value is both new and a MAKE
+    if (shifted & make_masked){
+        // SIGN EXTEND? 
+        return 0x000000FF & kbv;
     }
     //else return 0
 }

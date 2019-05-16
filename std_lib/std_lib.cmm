@@ -67,7 +67,8 @@ int out(long value int port) {
      void -
 */
 
-int vga_write(long value int addr) {
+int vga_write(int value int addr) {
+    out(addr 0);
     asm ("vgaw $, $, 0" addr value);
 }
 

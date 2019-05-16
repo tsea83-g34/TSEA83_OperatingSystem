@@ -183,7 +183,7 @@ int new_line() {
     Returns:
      bool - returns false if invalid color or position is given
 */
-int print_c_at(char c char pos) {
+int print_c_at(char c int pos) {
 
     if ((FG_COLOR >= PALETTE_SIZE) | (BG_COLOR >= PALETTE_SIZE)) return 0;
 
@@ -215,7 +215,7 @@ int print_c_at(char c char pos) {
     Returns:
      bool - returns false if invalid color or position is given
 */
-int print_c_at_pos(char c char x char y) {
+int print_c_at_pos(char c int x int y) {
     return print_c_at(c x + VIDEO_TILE_WIDTH * y);
 }
 

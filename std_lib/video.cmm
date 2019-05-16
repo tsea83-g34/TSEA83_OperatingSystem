@@ -30,7 +30,7 @@ int VIDEO_PIXEL_HEIGHT = 480;
      bool - returns false if given an invalid tile
 */
 
-int tile_index_write(long value int tile) {
+int tile_index_write(int value int tile) {
     if (tile >= VIDEO_TILES) return 0;
 
     vga_write(value tile);
