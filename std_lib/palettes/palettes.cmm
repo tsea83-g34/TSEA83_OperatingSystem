@@ -15,10 +15,10 @@ Requires:
 */
 
 int load_basic_palette() {
-    palette_index_write(0  PURE_BLACK  PURE_BLACK);
-    palette_index_write(1  DARK_GRAY   DARK_GRAY);
-    palette_index_write(2  LIGHT_GRAY  LIGHT_GRAY);
-    palette_index_write(3  PURE_WHITE  PURE_WHITE);
+    palette_index_write(0  PURE_WHITE  PURE_BLACK);
+    palette_index_write(1  LIGHT_GRAY  DARK_GRAY);
+    palette_index_write(2  DARK_GRAY   LIGHT_GRAY);
+    palette_index_write(3  PURE_BLACK  PURE_WHITE);
     palette_index_write(4  PURE_RED    PURE_RED);
     palette_index_write(5  PURE_ORANGE PURE_ORANGE);
     palette_index_write(6  PURE_YELLOW PURE_YELLOW);
