@@ -8,6 +8,11 @@ Linköpings Universitet written in the propriotary C-based language C--.
 #include std_lib/std_lib.cmm
 #include std_lib/keyboard.cmm
 #include std_lib/string.cmm
+#include std_lib/shift.cmm
+#include std_lib/math.cmm
+#include std_lib/video.cmm
+#include std_lib/print.cmm
+
 #include user_programs/user_programs.cmm
 
 int main() {
