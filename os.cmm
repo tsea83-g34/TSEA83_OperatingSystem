@@ -38,6 +38,12 @@ int main() {
         keyboard = 0;
         buildning_buffer = 1;
 
+        //Empty buffer
+        int i = 0;
+        while (i < 40) {
+            input_buffer[i] = 0;
+        }
+        
         // Keyboard read loop
         while(buildning_buffer) {
             keyboard = read_char();
@@ -54,7 +60,15 @@ int main() {
                     index = index + 1;
                 }
             }
+
+            // Print input buffer to top line of screen
+            clear();
+            print_c('>');
+            print(input_buffer);
         }
+
+        // Clear screen for user program
+        clear();
 
         // =========== Find program index ===========
         // Copy pointer to user program files buffer
