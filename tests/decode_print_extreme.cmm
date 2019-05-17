@@ -1,0 +1,51 @@
+/*
+TSEA83 PROJECT TEST
+
+More advanced test program that reads input and outputs to screen
+*/
+
+#include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
+#include ../std_lib/video.cmm
+#include ../std_lib/string.cmm
+#include ../std_lib/print.cmm
+#include ../std_lib/keyboard.cmm
+
+int main() {
+    // Keyboard read loop
+    char keyboard = 0;
+    char row_buffer[40];
+
+    memset(row_buffer 40 0);
+
+    while(1) {
+        keyboard = read_char();
+
+        // If new value => keyboard != 0
+        if (keyboard) {
+            if (keyboard == '\n') {
+                // Screen
+                new_line();
+
+                // Buffer
+                memset(row_buffer 40 0);
+            }
+            else if (keyboard == '\b') {
+                // Screen
+                back_cursor();
+                print_c_at(0 CURSOR);
+
+                // Buffer
+                row_buffer[CURSOR_X] = 0;
+            }
+            else {
+                // Buffer
+                row_buffer[CURSOR_X] = keyboard;
+
+                // Screen
+                print_c(keyboard);
+            }
+        }
+    }
+}
