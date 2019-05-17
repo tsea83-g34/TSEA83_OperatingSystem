@@ -5,6 +5,8 @@ Snake paint - A graphics program with a drawing snake
 */
 
 #include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
 #include ../std_lib/video.cmm
 #include ../std_lib/keyboard.cmm
 #include ../std_lib/print.cmm
@@ -32,6 +34,8 @@ int main() {
     long keyboard = 0;
     while(1) {
         keyboard = read_char();
+
+        out(CURSOR 0);
 
         // If new value => keyboard != 0
         if (keyboard) {
