@@ -1,3 +1,4 @@
 agg.cmm
 output.a
 .vscode/*
+*.asm
