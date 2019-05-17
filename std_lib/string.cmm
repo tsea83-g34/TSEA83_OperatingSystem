@@ -57,3 +57,21 @@ int string_copy(char* s_p char* d_p) {
         d_p = d_p + 1;
     }
 }
+
+/*  MEM SET - Set memory to a given char in a given range
+
+    Args:
+     * destination - Pointer to first memory address
+     * length      - Number of memory addresses to set
+     * value       - Value to set
+
+    Returns:
+     void -
+*/
+int memset(char* destination int length char value) {
+    int i = 0;
+    while(i < length) {
+        destination[i] = value;
+        i = i + 1;
+    }
+}
