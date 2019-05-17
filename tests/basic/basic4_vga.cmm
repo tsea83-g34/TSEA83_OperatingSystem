@@ -1,0 +1,40 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic array test program that outputs to screen
+*/
+
+
+int main() {
+    int i;
+    int val;
+
+    val = 'H';
+    i = 0;
+    asm("vgaw $, $, 0" i val);
+
+    val = 'e';
+    i = 1;
+    asm("vgaw $, $, 0" i val);
+
+    val = 'l';
+    i = 2;
+    asm("vgaw $, $, 0" i val);
+
+    val = 'l';
+    i = 3;
+    asm("vgaw $, $, 0" i val);
+
+    val = 'o';
+    i = 4;
+    asm("vgaw $, $, 0" i val);
+
+    val = '!';
+    i = 5;
+    asm("vgaw $, $, 0" i val);
+
+
+    int addr  = 1200;
+    int value = 0x00FF;
+    asm("vgaw $, $, 0" addr value);
+}

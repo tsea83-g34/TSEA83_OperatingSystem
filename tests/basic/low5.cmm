@@ -1,0 +1,24 @@
+
+int func1() {
+    int val = 0x4200;
+    int addr = 0;
+    asm("vgaw $, $, 0" addr val);
+}
+
+int func2() {
+    int val = 0x4300;
+    int addr = 1;
+    asm("vgaw $, $, 0" addr val);
+}
+
+int func3() {
+    int val = 0x00FF;
+    int addr = 1200;
+    asm("vgaw $, $, 0" addr val);
+}
+
+int main() {
+    func1();
+    func2();
+    func3();
+}

@@ -1,0 +1,77 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic array test program that outputs to screen
+*/
+
+
+int main() {
+    int val;
+    int addr;
+    char* str_p;
+    char str[] = "Hello world";
+
+    addr = 0;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+
+    addr = 1;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+
+    addr = 2;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 3;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 4;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 5;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 6;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 7;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 8;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 9;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+    
+    addr = 10;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+
+    addr = 11;
+    str_p = &str + addr;
+    val = *str_p;
+    asm("vgaw $, $, 0" addr val);
+
+    val = 0x00FF;
+    addr  = 1200;
+    asm("vgaw $, $, 0" addr val);
+}

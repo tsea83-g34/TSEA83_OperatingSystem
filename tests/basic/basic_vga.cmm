@@ -1,0 +1,15 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic test program that reads input and outputs to screen
+*/
+
+#include ../std_lib/std_lib.cmm
+
+int main() {
+    vga_write(10512 0); // A
+    vga_write(10768 1); // B
+
+    vga_write(-1 1200);
+    vga_write( 0 1201);
+}

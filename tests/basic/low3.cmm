@@ -1,0 +1,17 @@
+
+int main() {
+    int val;
+    int addr;
+
+    val = 0x4200;
+    addr = 0;
+    asm("vgaw $, $, 0" addr val);
+
+    val = val + 256;
+    addr = addr + 1;
+    asm("vgaw $, $, 0" addr val);    
+
+    val = val - 0x4201;
+    addr = addr + 1199;
+    asm("vgaw $, $, 0" addr val);
+}

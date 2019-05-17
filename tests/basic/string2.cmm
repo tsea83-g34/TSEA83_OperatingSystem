@@ -1,0 +1,68 @@
+/*
+TSEA83 PROJECT TEST
+
+Basic array test program that outputs to screen
+*/
+
+
+int main() {
+    int val;
+    int addr;
+    char str[] = "Hello world";
+
+    val = str[0];
+    addr = 0;
+    asm("vgaw $, $, 0" addr val);
+
+    val = str[1];
+    addr = 1;
+    asm("vgaw $, $, 0" addr val);
+
+    val = str[2];
+    addr = 2;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[3];
+    addr = 3;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[4];
+    addr = 4;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[5];
+    addr = 5;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[6];
+    addr = 6;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[7];
+    addr = 7;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[8];
+    addr = 8;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[9];
+    addr = 9;
+    asm("vgaw $, $, 0" addr val);
+    
+    val = str[10];
+    addr = 10;
+    asm("vgaw $, $, 0" addr val);
+
+    val = str[11];
+    addr = 11;
+    asm("vgaw $, $, 0" addr val);
+
+    val = str[12];
+    addr = 12;
+    asm("vgaw $, $, 0" addr val);
+
+    val = 0x00FF;
+    addr  = 1200;
+    asm("vgaw $, $, 0" addr val);
+}

@@ -1,0 +1,11 @@
+
+int func(int addr) {
+    int val = 0x4200;
+    asm("vgaw $, $, 0" addr val);
+}
+
+int main() {
+    func(0);
+    func(1);
+    func(1200);
+}
