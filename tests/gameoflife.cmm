@@ -100,7 +100,7 @@ int calc_next_gen() {
 
 int print_tile(int index) {
 
-    if (buffer[i]) {
+    if (buffer[index]) {
         BG_COLOR = 3;
     } else {
         BG_COLOR = 0;
