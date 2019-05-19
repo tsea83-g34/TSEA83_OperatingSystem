@@ -1,0 +1,31 @@
+// left arrow = 128, down, up, right
+// w = 119, a = 97, s = 115, d = 100
+
+
+int get_input(){
+
+}
+
+int imperialism(){
+
+    int input = read_char();
+    if (input) {
+        if (input == 128) {
+
+        } else if (input == 129){
+
+        } else if (input == 130){
+            
+        } else if (input == 131){
+            
+        } else if (input == 'a'){
+            
+        } else if (input == 's'){
+            
+        } else if (input == 'w'){
+            
+        } else if (input == 'd'){
+            
+        }
+    }
+}
