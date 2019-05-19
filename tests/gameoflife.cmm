@@ -110,6 +110,7 @@ int print_board() {
         }
 
         print_c_at(' ' i);
+        i = i + 1;
     }
 }
 
@@ -148,6 +149,8 @@ int main() {
     // Reset buffer
     memset(buffer VIDEO_TILES 0);
 
+    out(0xDEAD 0);
+
     // Draw glider in top left corner
     buffer[41] = 1;
     buffer[82] = 1;
@@ -157,7 +160,9 @@ int main() {
 
     print_board();
 
+    int count = 0;
     while (1) {
+        out(count 0);
         sleep_ms(500);
 
         next_gen();
