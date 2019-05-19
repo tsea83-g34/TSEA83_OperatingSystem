@@ -28,7 +28,8 @@ int win_score = 3;
 char bg = 0;
 char wall = 1;
 char ball = 2;
-char score = 3;
+char score1 = 3;
+char score2 = 4;
 
 int main() {
     // Input variables
@@ -36,6 +37,15 @@ int main() {
 
     // Game variables
     char board[(40*30)];
+
+    // Loop variables
+    int i = 0;
+
+    // Set color palette
+    palette_index_write(0 PURE_BLACK PURE_BLACK);    // background
+    palette_index_write(1 TEMPLE_BLUE TEMPLE_BLUE);  // wall
+    palette_index_write(2 PURE_PINK PURE_BLACK);     // ball
+    palette_index_write(3 TEMPLE_YELLOW PURE_BLACK); // score
 
     // Main program loop
     while (1) {
@@ -58,7 +68,7 @@ int main() {
 
       // Setup gameboard
       // Setup wallS
-      int i = 0;
+      i = 0;
       while (i < width) {
         // Upper wall
         board[i] = wall;
@@ -106,9 +116,31 @@ int main() {
 
         // Check collision, update score if necessary
 
-        // Draw board
-
-        // Draw score
+        // Draw board and score
+        i = 0;
+        char curr = 0;
+        while (i < width*height) {
+          curr = board[i];
+          if (curr == bg) {
+            BG_COLOR = 0;
+            print_c_at_pos(' ' i);
+          } else if (curr == wall) {
+            BG_COLOR = 1;
+            print_c_at_pos(' ' i);
+          } else if (curr == ball) {
+            FG_COLOR = 2;
+            BG_COLOR = 2;
+            print_c_at_pos(4 i); // @ at i pos
+          } else if (curr == score1) {
+            FG_COLOR = 3;
+            BG_COLOR = 3;
+            print_c_at_pos((p1score + 30) i);
+          } else if (curr == score2) {
+            FG_COLOR = 3;
+            BG_COLOR = 3;
+            print_c_at_pos((p2score + 30) i);
+          }
+        }
 
         // Check points, end game if should
         if (p1score >= win_score) {
