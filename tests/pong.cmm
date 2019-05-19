@@ -23,6 +23,8 @@ int score1_y = 1;
 int score2_x = 38;
 int score2_y = 1;
 
+int padding = 2;
+
 int win_score = 3;
 
 char bg = 0;
@@ -30,6 +32,8 @@ char wall = 1;
 char ball = 2;
 char score1 = 3;
 char score2 = 4;
+char point_zone1 = 5;
+char point_zone2 = 6;
 
 int main() {
     // Input variables
@@ -69,17 +73,36 @@ int main() {
       int p2_y = 12;
 
       // Setup gameboard
+      // Set all tiles to bg first
+      i = 0;
+      while (i < width*height) {
+        board[i] = bg;
+        i = i + 1;
+      }
+
       // Setup wallS
       i = 0;
       while (i < width) {
         // Upper wall
         board[i] = wall;
-        board[(1*width) + i] = wall;
+        board[(width) + i] = wall;
 
-        board[(38*width) + i] = wall;
-        board[(39*width) + i] = wall;
+        board[((height-2) * width) + i] = wall;
+        board[((height-1) * width) + i] = wall;
         i = i + 1;
       }
+
+      // Setup point zones 
+      i = 2;
+      while (i < 28) {
+        board[(i*width)] = point_zone1;
+        board[(i*width) + 1] = point_zone1;
+
+        board[(i*width) + (width-2)] = point_zone2;
+        board[(i*width) + (width-1)] = point_zone2;
+        i = i + 1;
+      }
+
       // Setup players
       i = 0;
       while (i < player_height) {
@@ -87,13 +110,14 @@ int main() {
         board[((p2_y+i)*width) + p2_x] = wall;
         i = i + 1;
       }
-      // Setup ball
-      board[(ball_y*width) +  ball_x] = ball;
 
-      // Setup score
-      board[(score1_y*width) + score1_x] = score;
-      board[(score2_y*width) + score2_x] = score;
-      
+      // Setup ball
+      board[(ball_y*width) + ball_x] = ball;
+
+      // Setup score boards
+      board[(score1_y*width) + score1_x] = score1;
+      board[(score2_y*width) + score2_x] = score2;
+
       // Main game loop
       while (game_running == 1) {
         // Read keyboard, update player pos
@@ -102,22 +126,22 @@ int main() {
           // ESCAPE quit program
           return; 
         } else if (keyboard = 's') {
-          if (p1_y < 23) {
+          if (p1_y < (height - player_height - padding)) {
             // P1 move down
             p1_y = p1_y + 1;
           }
         } else if (keyboard = 'w') {
-          if (p1_y > 2) {
+          if (p1_y > padding) {
             // P1 move up
             p1_y = p1_y - 1;
           }
         } else if (keyboard = 'l') {
-          if (p2_y < 23) {
+          if (p2_y < (height - player_height - padding)) {
             // P2 move down
             p2_y = p2_y + 1;
           }
         } else if (keyboard = 'o') {
-          if (p2_y > 2) {
+          if (p2_y > padding) {
             // P2 move up
             p2_y = p2_y - 1;
           }
@@ -137,7 +161,7 @@ int main() {
         char curr = 0;
         while (i < width*height) {
           curr = board[i];
-          if (curr == bg) {
+          if ((curr == bg) || (curr == point_zone1) || (curr == point_zone2)) {
             BG_COLOR = 0;
             print_c_at_pos(' ' i);
           } else if (curr == wall) {
