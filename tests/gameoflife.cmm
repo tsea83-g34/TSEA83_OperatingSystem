@@ -57,7 +57,7 @@ int calc_next_gen() {
                     // Adjust y
                     if (pos_y >= VIDEO_TILE_HEIGHT) {
                         pos_y = 0;
-                    } else if (pos_x <= VIDEO_TILE_WIDTH) {
+                    } else if (pos_y <= VIDEO_TILE_HEIGHT) {
                         pos_y = VIDEO_TILE_HEIGHT - 1;
                     }
                 
@@ -93,6 +93,7 @@ int calc_next_gen() {
 
         if (tile_x >= VIDEO_TILE_WIDTH) {
             tile_x = 0;
+            tile_y = tile_y + 1;
         }
     }
 
@@ -106,7 +107,7 @@ int print_tile(int index) {
         BG_COLOR = 0;
     }
 
-    print_c_at(' ' index);
+    print_c_at('\0' index);
 }
 
 int print_board() {
@@ -130,7 +131,7 @@ int update_changed() {
             buffer[tile_index] = 1;
         }
 
-        print_tile(i);
+        //print_tile(i);
         i = i + 1;
     }
 
@@ -172,8 +173,9 @@ int main() {
     int gen_count = 0;
     while (1) {
         out(gen_count 0);
-        sleep_ms(1000);
+        sleep_ms(100);
         next_gen();
+        print_board();
         gen_count = gen_count + 1;
     }
 }
