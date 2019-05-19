@@ -50,14 +50,14 @@ int calc_next_gen() {
                     // Adjust x
                     if (pos_x >= VIDEO_TILE_WIDTH) {
                         pos_x = 0;
-                    } else if (pos_x <= 0) {
+                    } else if (pos_x < 0) {
                         pos_x = VIDEO_TILE_WIDTH - 1;
                     }
 
                     // Adjust y
                     if (pos_y >= VIDEO_TILE_HEIGHT) {
                         pos_y = 0;
-                    } else if (pos_y <= 0) {
+                    } else if (pos_y < 0) {
                         pos_y = VIDEO_TILE_HEIGHT - 1;
                     }
                 
