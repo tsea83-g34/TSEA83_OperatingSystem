@@ -31,7 +31,7 @@ int calc_next_gen() {
     int tile_y = 0;
 
     // Iterate over all tiles
-    while (tile < 1200) {
+    while (tile < VIDEO_TILES) {
         
         int neighbor_count = 0;
         int x = -1;
@@ -115,7 +115,7 @@ int print_tile(int index) {
 int print_board() {
 
     int i = 0;
-    while (i < 1200) {
+    while (i < VIDEO_TILES) {
         print_tile(i);        
         i = i + 1;
     }
@@ -159,7 +159,7 @@ int next_gen() {
 int main() {
 
     // Reset buffer
-    memset(buffer 1200 0);
+    //memset(buffer VIDEO_TILES 0);
 
     out(0xDEAD 0);
 
@@ -175,7 +175,7 @@ int main() {
     int gen_count = 0;
     while (1) {
         //out(gen_count 0);
-        sleep_ms(100);
+        //sleep_ms(100);
         next_gen();
         print_board();
         gen_count = gen_count + 1;
