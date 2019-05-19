@@ -69,6 +69,8 @@ int advance_cursor() {
      void -
 */
 int back_cursor() {
+    if (CURSOR == 0) return 0;
+
     CURSOR = CURSOR - 1;
     // Still inside bounds, update x, y
     if (CURSOR < VIDEO_TILES) {
@@ -216,7 +218,7 @@ int print_c_at(char c int pos) {
      bool - returns false if invalid color or position is given
 */
 int print_c_at_pos(char c int x int y) {
-    return print_c_at(c x + VIDEO_TILE_WIDTH * y);
+    return print_c_at(c x + (VIDEO_TILE_WIDTH * y));
 }
 
 /*  PRINT C - Write a char to the screen at the current position and 
