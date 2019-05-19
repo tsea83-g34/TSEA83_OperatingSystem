@@ -20,7 +20,7 @@ for file in *; do
     [ $file = "generate_import" ] && continue
 
     # Build files string
-    files_string=${files_string}${file}'\0'
+    files_string=${files_string}${file}'\\0'
 
     # Build include string
     include_string=${include_string}"\n#include ${file}"
