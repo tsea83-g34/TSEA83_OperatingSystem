@@ -1,0 +1,76 @@
+/*
+  TSEA83 project 
+  
+  Test for simple pong game
+*/
+
+#include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
+#include ../std_lib/video.cmm
+#include ../std_lib/string.cmm
+#include ../std_lib/print.cmm
+#include ../std_lib/keyboard.cmm
+
+// Game constants
+int width = 30;
+int height = 28;
+
+int main() {
+    // Game variables
+    int game_running = 1;
+    int p1score = 0;
+    int p2score = 0;
+
+    int ball_x = 0;
+    int ball_y = 0;
+
+    int p1_x = 0;
+    int p1_y = 0;
+    
+    int p2_x = 0;
+    int p2_y = 0;
+
+    // Game board
+    char board[30*28];
+
+    // Input variables
+    char keyboard = 0;
+
+    // Main program loop
+    while (1) {
+
+      // Main game loop
+      while (game_running == 1) {
+        // Read keyboard, update player pos
+
+        // Update ball position
+
+        // Check collision, update score if necessary
+
+        // Draw board
+      }
+      
+      // Print after game message
+      
+
+      // Check if play again or quit
+      int play_again = 0;
+      while (play_again == 0) {
+        keyboard = read_char();
+
+        if (keyboard == '\n') {
+          play_again = 1;
+        } else if (keyboard == 27) { // ESCAPE
+          return;
+        }
+      } 
+
+      // If somehow comes here, exit
+      return;
+    }
+  }
+
+    
+
+}
