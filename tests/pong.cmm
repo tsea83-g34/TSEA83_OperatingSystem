@@ -75,7 +75,7 @@ int main() {
       // Setup gameboard
       // Set all tiles to bg first
       i = 0;
-      while (i < width*height) {
+      while (i < (width*height)) {
         board[i] = bg;
         i = i + 1;
       }
@@ -94,7 +94,7 @@ int main() {
 
       // Setup point zones 
       i = 2;
-      while (i < 28) {
+      while (i < (height - padding)) {
         board[(i*width)] = point_zone1;
         board[(i*width) + 1] = point_zone1;
 
@@ -125,7 +125,7 @@ int main() {
         if (keyboard == 27) {
           // ESCAPE => quit program
           return; 
-        } else if (keyboard = 's') {
+        } else if (keyboard == 's') {
           if (p1_y < (height - player_height - padding)) {
             // P1 move down
             p1_y = p1_y + 1;
@@ -134,7 +134,7 @@ int main() {
             board[((p1_y-1)*width) + p1_x] = bg;
             board[((p1_y + (player_height-1))*width) + p1_x] = wall;
           }
-        } else if (keyboard = 'w') {
+        } else if (keyboard == 'w') {
           if (p1_y > padding) {
             // P1 move up
             p1_y = p1_y - 1;
@@ -143,7 +143,7 @@ int main() {
             board[(p1_y*width) + p1_x] = wall;
             board[((p1_y + player_height)*width) + p1_x] = bg;
           }
-        } else if (keyboard = 'l') {
+        } else if (keyboard == 'l') {
           if (p2_y < (height - player_height - padding)) {
             // P2 move down
             p2_y = p2_y + 1;
@@ -152,7 +152,7 @@ int main() {
             board[((p2_y-1)*width) + p2_x] = bg;
             board[((p2_y + (player_height-1))*width) + p2_x] = wall;
           }
-        } else if (keyboard = 'o') {
+        } else if (keyboard == 'o') {
           if (p2_y > padding) {
             // P2 move up
             p2_y = p2_y - 1;
@@ -202,11 +202,12 @@ int main() {
         ball_x = ball_n_x;
         ball_y = ball_n_y;
   
+        asm("out 0 $" ball_x);
 
         // Draw board and score
         i = 0;
         char curr = 0;
-        while (i < width*height) {
+        while (i < (width*height)) {
           curr = board[i];
           if ((curr == bg) || (curr == point_zone1) || (curr == point_zone2)) {
             BG_COLOR = 0;
@@ -243,6 +244,7 @@ int main() {
       }
       
       // Print after game message and play again?
+      asm("out 0 $" winner);
 
 
       // Check if play again or quit
