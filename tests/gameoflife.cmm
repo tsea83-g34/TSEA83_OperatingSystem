@@ -5,8 +5,7 @@
 #include ../std_lib/video.cmm
 #include ../std_lib/print.cmm
 
-
-char buffer[VIDEO_TILES];
+char buffer[40*30];
 
 int changed_index = 0;
 int changed[64];
@@ -109,7 +108,7 @@ int print_board() {
         } else {
             BG_COLOR = 0;
         }
-        
+
         print_c_at(' ' i);
     }
 }
