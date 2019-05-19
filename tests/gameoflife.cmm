@@ -131,6 +131,7 @@ int update_changed() {
         }
 
         print_tile(i);
+        i = i + 1;
     }
 
     changed_index = 0;
