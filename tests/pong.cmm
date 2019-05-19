@@ -123,7 +123,7 @@ int main() {
         // Read keyboard, update player pos
         keyboard = read_char();
         if (keyboard == 27) {
-          // ESCAPE quit program
+          // ESCAPE => quit program
           return; 
         } else if (keyboard = 's') {
           if (p1_y < (height - player_height - padding)) {
@@ -152,7 +152,31 @@ int main() {
         ball_n_y = ball_y + ball_d_y;
 
         // Check collision, update score if necessary
-
+        char ball_n_pos = board[(ball_n_y*width) + ball_n_x];
+        
+        if (ball_n_pos == wall) {
+          // Collide with wall, bounce back in opposite direction
+          ball_d_x = -ball_d_x;
+          ball_d_y = -ball_d_y;
+          ball_x = ball_x + ball_d_x;
+          ball_y = ball_y + ball_d_y;
+        } else if (ball_n_pos == point_zone1) {
+          // Player 2 made a goal
+          p2score = p2score + 1;
+          // Reset ball position and direction
+          ball_x = 19;
+          ball_y = 14;
+          ball_d_x = 1;
+          ball_d_y = 1;
+        } else if (ball_n_pos == point_zone2) {
+          // Player 2 made a goal
+          p2score = p2score + 1;
+          // Reset ball position and direction
+          ball_x = 19;
+          ball_y = 14;
+          ball_d_x = -1;
+          ball_d_y = -1;
+        } 
   
         // Update ball position
 
