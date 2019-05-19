@@ -122,7 +122,7 @@ int update_changed() {
     changed_index = 0;
 }
 
-long SLEEP_MS_MULT = 76924;
+long SLEEP_MS_MULT = 7692;
 
 int sleep_ms(long ms) {
     long wait_until = ms * SLEEP_MS_MULT;
