@@ -9,8 +9,8 @@ Requires:
 
 // TEXT BUFFER GLOBALS
 // (color must be a value between 0 and 15)
-char FG_COLOR = 0;
-char BG_COLOR = 0;
+int FG_COLOR = 0;
+int BG_COLOR = 0;
 
 int  CURSOR   = 0;
 int  CURSOR_X = 0;
