@@ -129,21 +129,37 @@ int main() {
           if (p1_y < (height - player_height - padding)) {
             // P1 move down
             p1_y = p1_y + 1;
+
+            // Update board
+            board[((p1_y-1)*width) + p1_x] = bg;
+            board[((p1_y + (player_height-1))*width) + p1_x] = wall;
           }
         } else if (keyboard = 'w') {
           if (p1_y > padding) {
             // P1 move up
             p1_y = p1_y - 1;
+
+            // Update board
+            board[(p1_y*width) + p1_x] = wall;
+            board[((p1_y + player_height)*width) + p1_x] = bg;
           }
         } else if (keyboard = 'l') {
           if (p2_y < (height - player_height - padding)) {
             // P2 move down
             p2_y = p2_y + 1;
+
+            // Update board
+            board[((p2_y-1)*width) + p2_x] = bg;
+            board[((p2_y + (player_height-1))*width) + p2_x] = wall;
           }
         } else if (keyboard = 'o') {
           if (p2_y > padding) {
             // P2 move up
             p2_y = p2_y - 1;
+
+            // Update board
+            board[(p2_y*width) + p2_x] = wall;
+            board[((p2_y + player_height)*width) + p2_x] = bg;
           }
         }
 
@@ -158,27 +174,34 @@ int main() {
           // Collide with wall, bounce back in opposite direction
           ball_d_x = -ball_d_x;
           ball_d_y = -ball_d_y;
-          ball_x = ball_x + ball_d_x;
-          ball_y = ball_y + ball_d_y;
+          ball_n_x = ball_x + ball_d_x;
+          ball_n_y = ball_y + ball_d_y;
         } else if (ball_n_pos == point_zone1) {
           // Player 2 made a goal
           p2score = p2score + 1;
           // Reset ball position and direction
-          ball_x = 19;
-          ball_y = 14;
+          ball_n_x = 19;
+          ball_n_y = 14;
           ball_d_x = 1;
           ball_d_y = 1;
         } else if (ball_n_pos == point_zone2) {
-          // Player 2 made a goal
+          // Player 1 made a goal
           p2score = p2score + 1;
           // Reset ball position and direction
-          ball_x = 19;
-          ball_y = 14;
+          ball_n_x = 19;
+          ball_n_y = 14;
           ball_d_x = -1;
           ball_d_y = -1;
-        } 
-  
+        }
+
+        // Update board
+        board[(ball_y*width) + ball_x] = bg;
+        board[(ball_n_y*width) + ball_n_x] = ball;
+        
         // Update ball position
+        ball_x = ball_n_x;
+        ball_y = ball_n_y;
+  
 
         // Draw board and score
         i = 0;
