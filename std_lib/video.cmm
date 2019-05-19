@@ -69,12 +69,12 @@ int tile_coord_write(long value int x int y) {
      void -
 */
 
-int palette_index_write(int index char fg char bg) {
+int palette_index_write(int index int fg int bg) {
     if (index >= PALETTE_SIZE) return 0;
 
     int addr = PALETTE_START + index;
-    long value = fg;
-    value = left_shift_l(fg 8);
+    int value = fg;
+    value = left_shift_i(fg 8);
     value = value + bg;
 
     vga_write(value addr);

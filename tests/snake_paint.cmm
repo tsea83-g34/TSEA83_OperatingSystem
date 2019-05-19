@@ -23,12 +23,13 @@ int main() {
     palette_index_write(7 PURE_BLUE   PURE_BLUE);
     palette_index_write(8 PURE_MARINE PURE_MARINE);
     palette_index_write(9 PURE_PURPLE PURE_PURPLE);
-    palette_index_write(0 PURE_PINK   PURE_PINK);
+    palette_index_write(10 PURE_PINK  PURE_PINK);
 
-    palette_index_write(10  LIGHT_GRAY  LIGHT_GRAY);
-    
+    palette_index_write(0  PURE_WHITE PURE_WHITE);
+    palette_index_write(11 PURE_BLACK PURE_BLACK);
+
     // Set cursor color
-    FG_COLOR = 10;
+    FG_COLOR = 11;
 
     // Keyboard read loop
     long keyboard = 0;
@@ -65,7 +66,12 @@ int main() {
             // Change color
             // (Key 0 to 9)
             else if ((keyboard >= 48) & (keyboard <= 57)) {
-                BG_COLOR = keyboard - 48;
+                BG_COLOR = keyboard - 47;
+                print_c_at('+' CURSOR);
+            }
+
+            else if (keyboard == '\n') {
+                BG_COLOR = 0;
                 print_c_at('+' CURSOR);
             }
         }

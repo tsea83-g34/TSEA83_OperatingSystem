@@ -9,8 +9,8 @@ Requires:
 
 // TEXT BUFFER GLOBALS
 // (color must be a value between 0 and 15)
-char FG_COLOR = 0;
-char BG_COLOR = 0;
+int FG_COLOR = 0;
+int BG_COLOR = 0;
 
 int  CURSOR   = 0;
 int  CURSOR_X = 0;
@@ -69,6 +69,8 @@ int advance_cursor() {
      void -
 */
 int back_cursor() {
+    if (CURSOR == 0) return 0;
+
     CURSOR = CURSOR - 1;
     // Still inside bounds, update x, y
     if (CURSOR < VIDEO_TILES) {
@@ -123,7 +125,7 @@ int advance_line() {
     CURSOR_Y = CURSOR_Y + 1;
 
     if (CURSOR_Y < VIDEO_TILE_HEIGHT) {
-        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y + CURSOR_X;
+        CURSOR = (VIDEO_TILE_WIDTH * CURSOR_Y) + CURSOR_X;
     }
     // Outside screen bounds, reset!
     else {
@@ -143,14 +145,13 @@ int back_line() {
     CURSOR_Y = CURSOR_Y - 1;
 
     if (CURSOR_Y >= 0) {
-        CURSOR = VIDEO_TILE_WIDTH * CURSOR_Y;
+        CURSOR = (VIDEO_TILE_WIDTH * CURSOR_Y) + CURSOR_X;
     }
     // Outside screen bounds, reset!
     else {
         CURSOR   = CURSOR_X;
-        CURSOR_Y = VIDEO_TILE_HEIGHT;
+        CURSOR_Y = VIDEO_TILE_HEIGHT - 1;
     }
-    CURSOR_X = 0;
 }
 
 /*  NEW LINE - Advance the cursor to the next line
@@ -216,7 +217,7 @@ int print_c_at(char c int pos) {
      bool - returns false if invalid color or position is given
 */
 int print_c_at_pos(char c int x int y) {
-    return print_c_at(c x + VIDEO_TILE_WIDTH * y);
+    return print_c_at(c x + (VIDEO_TILE_WIDTH * y));
 }
 
 /*  PRINT C - Write a char to the screen at the current position and 
