@@ -1,0 +1,9 @@
+#include std_lib.cmm
+#include palettes/colors.cmm
+#include shift.cmm
+#include math.cmm
+#include string.cmm
+#include video.cmm
+#include print.cmm
+#include palettes/palettes.cmm
+#include keyboard.cmm
