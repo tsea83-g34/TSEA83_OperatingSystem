@@ -5,14 +5,7 @@ Basic os and terminal program for TSEA83 Computer design course at
 Linköpings Universitet written in the propriotary C-based language C--.
 */
 
-#include std_lib/std_lib.cmm
-#include std_lib/keyboard.cmm
-#include std_lib/string.cmm
-#include std_lib/shift.cmm
-#include std_lib/math.cmm
-#include std_lib/video.cmm
-#include std_lib/print.cmm
-
+#include std_lib/all.cmm
 #include user_programs/user_programs.cmm
 
 int main() {
@@ -44,17 +37,16 @@ int main() {
         buildning_buffer = 1;
 
         //Empty buffer
-        int i = 0;
-        while (i < 40) {
-            input_buffer[i] = 0;
-        }
+        memset(programs_buff 40 0);
         
+        out(0xBEEF 0);
+
         // Keyboard read loop
         while(buildning_buffer) {
             keyboard = read_char();
 
             // New input
-            if (keyboard != 0) {
+            if (keyboard) {
                 // Enter, decode the buffer
                 if (keyboard == '\n') {
                     input_buffer[index] = '\0';
@@ -66,10 +58,13 @@ int main() {
                 }
             }
 
+
             // Print input buffer to top line of screen
             clear();
             print_c('>');
             print(input_buffer);
+            
+            out(0xDEAD 0);
         }
 
         // Clear screen for user program
