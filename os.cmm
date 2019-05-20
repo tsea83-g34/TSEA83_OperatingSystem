@@ -55,11 +55,14 @@ int main() {
                 }
                 // Backspace, remove last character
                 else if (keyboard == '\b') {
-                    back_cursor();
-                    print_c_at(0 CURSOR);
-                    
-                    index = index - 1;
-                    input_buffer[index] = '\0';
+                    // Dont remove past the first charactrer
+                    if (index != 0) {
+                        back_cursor();
+                        print_c_at(0 CURSOR);
+                        
+                        index = index - 1;
+                        input_buffer[index] = '\0';
+                    }
                 }
                 // Add character to buffer and screen
                 else {
@@ -74,34 +77,48 @@ int main() {
         clear();
 
         // =========== Find program index ===========
-        // Copy pointer to user program files buffer
-        programs_buff = USER_PROGRAMS;
 
-        program_index = 0;
-        searching = 1;
+        // Ignore if the input is empty
+        if (string_length(input_buffer) != 0) {
+            
+            // Copy pointer to user program files buffer
+            programs_buff = USER_PROGRAMS;
 
-        while((program_index < USER_PROGRAM_COUNT) & searching) {
+            program_index = 0;
+            searching = 1;
 
-            // Input matched program name
-            if (string_compare(input_buffer programs_buff) == 0) {
-                searching = 0;
+            while((program_index < USER_PROGRAM_COUNT) & searching) {
+                
+                out(0x000F 0);
+
+                // Input matched program name
+                if (string_compare(input_buffer programs_buff) == 0) {
+                    out(0x00F0 0);
+                    searching = 0;
+                }
+                // Countinue to next string
+                else {
+                    
+                    out(0x0F00 0);
+
+                    length = string_length(programs_buff);
+                    programs_buff = programs_buff + length;
+                    program_index = program_index + 1;
+                }
             }
-            // Countinue to next string
-            else {
-                length = string_length(programs_buff);
-                programs_buff = programs_buff + length;
-                program_index = program_index + 1;
+
+            // =========== Call function ===========
+            // Found program
+            if (program_index != USER_PROGRAM_COUNT) {
+                
+                out(0xF000 0);
+
+                call_user_program(program_index);
             }
-        }
 
-        // =========== Call function ===========
-        // Found program
-        if (program_index != USER_PROGRAM_COUNT) {
-            call_user_program(program_index);
+            // Clear screen for terminal
+            load_basic_palette();
+            clear();
         }
-
-        // Clear screen for terminal
-        load_basic_palette();
-        clear();
     }
 }
