@@ -1,0 +1,25 @@
+/*
+C-- STANDARD LIB SLEEP
+
+Requires:
+*/
+
+// SLEEP CONSTANT
+long SLEEP_MS_MULT = 3846;
+
+/*  SLEEP MS - Busy wait for a given amount of miliseconds
+    
+    Args:
+     * ms - Miliseconds to sleep for (approximate)
+
+    Returns:
+     void -
+*/
+int sleep_ms(long ms) {
+    long wait_until = ms * SLEEP_MS_MULT;
+    long count = 0;
+
+    while (count < wait_until) {
+        count = count + 1;
+    }
+}

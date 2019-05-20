@@ -1,0 +1,171 @@
+
+#include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
+#include ../std_lib/video.cmm
+#include ../std_lib/print.cmm
+
+char buffer[40*30];
+
+int changed_index = 0;
+int changed[64];
+
+int memset(char* destination int length char value) {
+    int i = 0;
+    while(i < length) {
+        destination[i] = value;
+        i = i + 1;
+    }
+}
+
+int add_changed(int index) {
+    changed[changed_index] = index;
+    changed_index = changed_index + 1;
+}
+
+int calc_next_gen() {
+
+    // Set up tile position variables
+    int tile = 0;
+    int tile_x = 0;
+    int tile_y = 0;
+
+    // Iterate over all tiles
+    while (tile < VIDEO_TILES) {
+        
+        int neighbor_count = 0;
+        int x = -1;
+        int y = -1;
+
+        // Iterate over offsets for x and y: -1, 0, 1
+        while (y < 2) {
+            while (x < 2) {
+                
+                // If not in the middle
+                if ((x != 0) | (y != 0)) {
+                    // Acquire position adjusted for wrapping
+                    int pos_x = tile_x + x;
+                    int pos_y = tile_y + y;
+
+                    // Adjust x
+                    if (pos_x >= VIDEO_TILE_WIDTH) {
+                        pos_x = 0;
+                    } else if (pos_x <= VIDEO_TILE_WIDTH) {
+                        pos_x = VIDEO_TILE_WIDTH - 1;
+                    }
+
+                    // Adjust y
+                    if (pos_y >= VIDEO_TILE_HEIGHT) {
+                        pos_y = 0;
+                    } else if (pos_x <= VIDEO_TILE_WIDTH) {
+                        pos_y = VIDEO_TILE_HEIGHT - 1;
+                    }
+                
+                    int position = pos_x + (VIDEO_TILE_WIDTH * pos_y);
+
+                    // If tile contains a neighbor, up the neighbor count
+                    neighbor_count = neighbor_count + buffer[position];
+
+                    x = x + 1;       
+                }
+            }
+
+            y = y + 1;
+        }
+
+        if (buffer[tile] == 1) {
+            
+            // Solitude and overpopulation
+            if ((neighbor_count < 2) | (neighbor_count > 3)) {
+                add_changed(tile);
+            }
+
+        } else {
+            
+            if (neighbor_count == 3) {
+                add_changed(tile);
+            }
+        }
+
+        // Increment tile
+        tile_x = tile_x + 1;
+        tile = tile + 1;
+
+        if (tile_x >= VIDEO_TILE_WIDTH) {
+            tile_x = 0;
+        }
+    }
+
+}
+
+int print_board() {
+
+    int i = 0;
+    while (i < VIDEO_TILES) {
+
+        if (buffer[i]) {
+            BG_COLOR = 3;
+        } else {
+            BG_COLOR = 0;
+        }
+
+        print_c_at(' ' i);
+        i = i + 1;
+    }
+}
+
+int update_changed() {
+
+    int i = 0;
+    while (i < changed_index) {
+        int tile_index = changed[i];
+
+        if (buffer[tile_index]) buffer[tile_index] = 0;
+        else                    buffer[tile_index] = 1;
+
+    }
+
+    changed_index = 0;
+}
+
+long SLEEP_MS_MULT = 7692;
+
+int sleep_ms(long ms) {
+    long wait_until = ms * SLEEP_MS_MULT;
+    long count = 0;
+
+    while (count < wait_until) {
+        count = count + 1;
+    }
+}
+
+int next_gen() {
+    calc_next_gen();
+    update_changed();
+}
+
+int main() {
+
+    // Reset buffer
+    memset(buffer VIDEO_TILES 0);
+
+    out(0xDEAD 0);
+
+    // Draw glider in top left corner
+    buffer[41] = 1;
+    buffer[82] = 1;
+    buffer[121] = 1;
+    buffer[122] = 1;
+    buffer[123] = 1;
+
+    print_board();
+
+    int count = 0;
+    while (1) {
+        out(count 0);
+        sleep_ms(500);
+
+        next_gen();
+    }
+}
+

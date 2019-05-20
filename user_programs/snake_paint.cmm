@@ -1,18 +1,10 @@
 /*
-TSEA83 PROJECT TEST
+TSEA83 PROJECT USER PROGRAM
 
 Snake paint - A graphics program with a drawing snake
 */
 
-#include ../std_lib/std_lib.cmm
-#include ../std_lib/shift.cmm
-#include ../std_lib/math.cmm
-#include ../std_lib/video.cmm
-#include ../std_lib/keyboard.cmm
-#include ../std_lib/print.cmm
-#include ../std_lib/palettes/colors.cmm
-
-int main() {
+int snake_paint() {
     // Load paint palette
     palette_index_write(1 PURE_RED    PURE_RED);
     palette_index_write(2 PURE_ORANGE PURE_ORANGE);
@@ -35,8 +27,6 @@ int main() {
     long keyboard = 0;
     while(1) {
         keyboard = read_char();
-
-        out(CURSOR 0);
 
         // If new value => keyboard != 0
         if (keyboard) {
@@ -69,10 +59,15 @@ int main() {
                 BG_COLOR = keyboard - 47;
                 print_c_at('+' CURSOR);
             }
-
+            // (Enter)
             else if (keyboard == '\n') {
                 BG_COLOR = 0;
                 print_c_at('+' CURSOR);
+            }
+
+            // Exit program
+            else if (keyboard == '\e') {
+                return 0;
             }
         }
     }

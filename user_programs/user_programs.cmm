@@ -1,0 +1,12 @@
+
+#include snake_paint.cmm
+
+char USER_PROGRAMS[] = "snake_paint.cmm\0";
+int USER_PROGRAM_COUNT = 1;
+
+int call_user_program(int program) {
+	if (program == 0) {
+		snake_paint();
+	}
+	else {}
+}
