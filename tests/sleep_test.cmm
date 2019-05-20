@@ -1,0 +1,25 @@
+
+
+long SLEEP_MS_MULT = 7692;
+
+int sleep_ms(long ms) {
+    long wait_until = ms * SLEEP_MS_MULT;
+    long count = 0;
+
+    while (count < wait_until) {
+        count = count + 1;
+    }
+}
+
+int vga_write(int addr int value) {
+    asm ("vgaw $, $, 0" value addr);
+}
+
+int main() {
+
+    int i = 0;
+    while (i < 10) {
+        vga_write(i i + 0x30);
+        sleep_ms(1000);
+    }
+}
