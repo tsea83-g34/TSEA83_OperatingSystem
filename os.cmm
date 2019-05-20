@@ -37,9 +37,10 @@ int main() {
         buildning_buffer = 1;
 
         //Empty buffer
-        memset(programs_buff 40 0);
+        memset(input_buffer 40 0);
         
-        out(0xBEEF 0);
+        // Output line start character
+        print_c('>');
 
         // Keyboard read loop
         while(buildning_buffer) {
@@ -52,19 +53,21 @@ int main() {
                     input_buffer[index] = '\0';
                     buildning_buffer = 0;
                 }
+                // Backspace, remove last character
+                else if (keyboard == '\b') {
+                    back_cursor();
+                    print_c_at(0 CURSOR);
+                    
+                    index = index - 1;
+                    input_buffer[index] = '\0';
+                }
+                // Add character to buffer and screen
                 else {
                     input_buffer[index] = keyboard;
                     index = index + 1;
+                    print_c(keyboard);
                 }
             }
-
-
-            // Print input buffer to top line of screen
-            clear();
-            print_c('>');
-            print(input_buffer);
-            
-            out(0xDEAD 0);
         }
 
         // Clear screen for user program
@@ -80,7 +83,7 @@ int main() {
         while((program_index < USER_PROGRAM_COUNT) & searching) {
 
             // Input matched program name
-            if (!string_compare(input_buffer programs_buff)) {
+            if (string_compare(input_buffer programs_buff) == 0) {
                 searching = 0;
             }
             // Countinue to next string
@@ -96,5 +99,9 @@ int main() {
         if (program_index != USER_PROGRAM_COUNT) {
             call_user_program(program_index);
         }
+
+        // Clear screen for terminal
+        load_basic_palette();
+        clear();
     }
 }
