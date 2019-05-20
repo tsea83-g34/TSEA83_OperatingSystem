@@ -12,7 +12,7 @@ int sleep_ms(long ms) {
 }
 
 int vga_write(int addr int value) {
-    asm ("vgaw $, $, 0" value addr);
+    asm ("vgaw $, $, 0" addr value);
 }
 
 int main() {
