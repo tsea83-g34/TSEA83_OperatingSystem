@@ -34,40 +34,43 @@ int calc_next_gen() {
     while (tile < VIDEO_TILES) {
         
         int neighbor_count = 0;
-        int x = -1;
         int y = -1;
 
         // Iterate over offsets for x and y: -1, 0, 1
         while (y < 2) {
+            
+            int x = -1;
             while (x < 2) {
                 
                 // If not in the middle
-                if ((x != 0) | (y != 0)) {
-                    // Acquire position adjusted for wrapping
-                    int pos_x = tile_x + x;
-                    int pos_y = tile_y + y;
+                if ((x == 0) & (x == 0)) continue 0;
 
-                    // Adjust x
-                    if (pos_x >= VIDEO_TILE_WIDTH) {
-                        pos_x = 0;
-                    } else if (pos_x < 0) {
-                        pos_x = VIDEO_TILE_WIDTH - 1;
-                    }
+            
+                // Acquire position adjusted for wrapping
+                int pos_x = tile_x + x;
+                int pos_y = tile_y + y;
 
-                    // Adjust y
-                    if (pos_y >= VIDEO_TILE_HEIGHT) {
-                        pos_y = 0;
-                    } else if (pos_y < 0) {
-                        pos_y = VIDEO_TILE_HEIGHT - 1;
-                    }
-                
-                    int position = pos_x + (VIDEO_TILE_WIDTH * pos_y);
-
-                    // If tile contains a neighbor, up the neighbor count
-                    neighbor_count = neighbor_count + buffer[position];
-
-                    x = x + 1;       
+                // Adjust x
+                if (pos_x >= VIDEO_TILE_WIDTH) {
+                    pos_x = 0;
+                } else if (pos_x < 0) {
+                    pos_x = VIDEO_TILE_WIDTH - 1;
                 }
+
+                // Adjust y
+                if (pos_y >= VIDEO_TILE_HEIGHT) {
+                    pos_y = 0;
+                } else if (pos_y < 0) {
+                    pos_y = VIDEO_TILE_HEIGHT - 1;
+                }
+            
+                int position = pos_x + (VIDEO_TILE_WIDTH * pos_y);
+
+                // If tile contains a neighbor, up the neighbor count
+                neighbor_count = neighbor_count + buffer[position];
+
+                x = x + 1;       
+
             }
 
             y = y + 1;
@@ -127,9 +130,13 @@ int update_changed() {
     while (i < changed_index) {
         int tile_index = changed[i];
 
+        out(0xFFFF 0);
+        
         if (buffer[tile_index]) {
             buffer[tile_index] = 0;
+            out(0xDDDD 0);
         } else {
+            out(0xAAAA 0);
             buffer[tile_index] = 1;
         }
 
