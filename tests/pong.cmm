@@ -28,6 +28,7 @@ int padding = 2;
 
 int win_score = 3;
 
+// tile versions
 char bg = 0;
 char wall = 1;
 char ball = 2;
@@ -36,6 +37,9 @@ char score2 = 4;
 char point_zone1 = 5;
 char point_zone2 = 6;
 
+// Loop variables
+int i = 0;
+
 int main() {
   // Input variables
   char keyboard = 0;
@@ -43,14 +47,7 @@ int main() {
   // Game variables
   char board[(40*30)];
 
-  // Loop variables
-  int i = 0;
-
-  // Set color palette
-  palette_index_write(0 PURE_BLACK PURE_BLACK);    // background
-  palette_index_write(1 TEMPLE_BLUE TEMPLE_BLUE);  // wall
-  palette_index_write(2 PURE_PINK PURE_BLACK);     // ball
-  palette_index_write(3 TEMPLE_YELLOW PURE_BLACK); // score
+	write_palsette();
 
   // Main program loop
   while (1) {
@@ -73,51 +70,11 @@ int main() {
     int p2_x = 37;
     int p2_y = 12;
 
-    // Setup gameboard
-    // Set all tiles to bg first
-    i = 0;
-    while (i < (width*height)) {
-      board[i] = bg;
-      i = i + 1;
-    }
+		set_all_bg(board);
 
-    // Setup wallS
-    i = 0;
-    while (i < width) {
-      // Upper wall
-      board[i] = wall;
-      board[(width) + i] = wall;
+		setup_players(board p1_x p1_y p2_x p2_y);
 
-      board[((height-2) * width) + i] = wall;
-      board[((height-1) * width) + i] = wall;
-      i = i + 1;
-    }
-
-    // Setup point zones 
-    i = 2;
-    while (i < (height - padding)) {
-      board[(i*width)] = point_zone1;
-      board[(i*width) + 1] = point_zone1;
-
-      board[(i*width) + (width-2)] = point_zone2;
-      board[(i*width) + (width-1)] = point_zone2;
-      i = i + 1;
-    }
-
-    // Setup players
-    i = 0;
-    while (i < player_height) {
-      board[((p1_y+i)*width) + p1_x] = wall;
-      board[((p2_y+i)*width) + p2_x] = wall;
-      i = i + 1;
-    }
-
-    // Setup ball
-    board[(ball_y*width) + ball_x] = ball;
-
-    // Setup score boards
-    board[(score1_y*width) + score1_x] = score1;
-    board[(score2_y*width) + score2_x] = score2;
+		setup_ball(board ball_x ball_y);
 
     // Main game loop
     while (game_running == 1) {
@@ -205,31 +162,7 @@ int main() {
 
       asm("out 0 $" ball_x);
 
-      // Draw board and score
-      i = 0;
-      char curr = 0;
-      while (i < (width*height)) {
-        curr = board[i];
-        if ((curr == bg) | (curr == point_zone1) | (curr == point_zone2)) {
-          BG_COLOR = 0;
-          print_c_at(' ' i);
-        } else if (curr == wall) {
-          BG_COLOR = 1;
-          print_c_at(' ' i);
-        } else if (curr == ball) {
-          FG_COLOR = 2;
-          BG_COLOR = 2;
-          print_c_at(4 i); // @ at i pos
-        } else if (curr == score1) {
-          FG_COLOR = 3;
-          BG_COLOR = 3;
-          print_c_at((p1score + 30) i); // print p1 score
-        } else if (curr == score2) {
-          FG_COLOR = 3;
-          BG_COLOR = 3;
-          print_c_at((p2score + 30) i); // print p2 score
-        }
-      }
+			draw_board_and_score(board);
 
       // Check points, end game if should
       if (p1score >= win_score) {
@@ -247,7 +180,6 @@ int main() {
     // Print after game message and play again?
     asm("out 0 $" winner);
 
-
     // Check if play again or quit
     int play_again = 0;
     while (play_again == 0) {
@@ -264,4 +196,95 @@ int main() {
     // If somehow comes here, exit
     return 0;
   }
+	
+	// If somehow comes here, exit
+  return 0;
+}
+
+void write_palette() {
+	palette_index_write(0 PURE_BLACK PURE_BLACK);    // background
+  palette_index_write(1 TEMPLE_BLUE TEMPLE_BLUE);  // wall
+  palette_index_write(2 PURE_PINK PURE_BLACK);     // ball
+  palette_index_write(3 TEMPLE_YELLOW PURE_BLACK); // score
+}
+
+void setup_board(char* arr) {
+	// Set all tiles to bg first
+	i = 0;
+	while (i < (width*height)) {
+		board[i] = bg;
+		i = i + 1;
+	}	
+
+	// Setup walls
+	i = 2;
+	while (i < (height - padding)) {
+		board[(i*width)] = point_zone1;
+		board[(i*width) + 1] = point_zone1;
+
+		board[(i*width) + (width-2)] = point_zone2;
+		board[(i*width) + (width-1)] = point_zone2;
+		i = i + 1;
+	}	
+
+	// Setup point zones
+	i = 0;
+	while (i < width) {
+		// Upper wall
+		board[i] = wall;
+		board[(width) + i] = wall;
+
+		board[((height-2) * width) + i] = wall;
+		board[((height-1) * width) + i] = wall;
+		i = i + 1;
+	}
+
+	// Setup scores
+	board[(score1_y*width) + score1_x] = score1;
+	board[(score2_y*width) + score2_x] = score2;
+}
+
+void setup_players(char* board int p1_x int p1_y int p2_x int p2_y) {
+	i = 0;
+	while (i < player_height) {
+		board[((p1_y+i)*width) + p1_x] = wall;
+		board[((p2_y+i)*width) + p2_x] = wall;
+		i = i + 1;
+	}
+}
+
+void setup_ball(char* board int ball_x int ball_y) {
+	board[(ball_y*width) + ball_x] = ball;
+}
+
+void draw_board_and_score(char* board) {
+	i = 0;
+	char curr = 0;
+	while (i < (width*height)) {
+		curr = board[i];
+		if ((curr == bg) | (curr == point_zone1) | (curr == point_zone2)) {
+			// Draw blank bg
+			BG_COLOR = 0;
+			print_c_at(' ' i);
+		} else if (curr == wall) {
+			// Draw wall
+			BG_COLOR = 1;
+			print_c_at(' ' i);
+		} else if (curr == ball) {
+			// Draw ball
+			FG_COLOR = 2;
+			BG_COLOR = 2;
+			print_c_at(4 i); // @ at i pos
+		} else if (curr == score1) {
+			// Draw score 1
+			FG_COLOR = 3;
+			BG_COLOR = 3;
+			print_c_at((p1score + 30) i); // print p1 score
+		} else if (curr == score2) {
+			// Draw score 2
+			FG_COLOR = 3;
+			BG_COLOR = 3;
+			print_c_at((p2score + 30) i); // print p2 score
+		}
+	}
 }
