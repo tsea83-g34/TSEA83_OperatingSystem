@@ -24,7 +24,7 @@ int main() {
     while (i < 10) {
         out (i 0);
         vga_write(i i + 0x30);
-        sleep_ms(1);
+        sleep_ms(100);
         i = i + 1;
     }
 }
