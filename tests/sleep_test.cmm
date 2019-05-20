@@ -1,4 +1,7 @@
 
+int out(long value int port) {
+    asm ("out 0, $" value);
+}
 
 long SLEEP_MS_MULT = 7692;
 
@@ -19,7 +22,8 @@ int main() {
 
     int i = 0;
     while (i < 10) {
+        out (i 0);
         vga_write(i i + 0x30);
-        sleep_ms(1000);
+        sleep_ms(1);
     }
 }
