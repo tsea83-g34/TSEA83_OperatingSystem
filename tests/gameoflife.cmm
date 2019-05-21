@@ -178,6 +178,7 @@ int main() {
     add_changed(123);
 
     update_changed();
+    update_changed();
     print_board();
 
     int gen_count = 0;
