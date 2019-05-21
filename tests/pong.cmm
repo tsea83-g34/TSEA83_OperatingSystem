@@ -110,13 +110,19 @@ int main() {
 		board[(score1_y*width) + score1_x] = score1;
 		board[(score2_y*width) + score2_x] = score2;
 
+		out(0x1111 0);
+		sleep_ms(1000);
 		// Setup player
 		i = 0;
+
 		while (i < p_height) {
 			board[((p1_y+i)*width) + p1_x] = p1;
 			board[((p2_y+i)*width) + p2_x] = p2;
+			out(0x0A55 0);
 			i = i + 1;
 		}
+
+		sleep_ms(5000);
 
 		// Setup ball
 		board[(ball_y*width) + ball_x] = ball;
@@ -128,12 +134,10 @@ int main() {
       keyboard = read_char();
       if (keyboard == 27) {
         // ESCAPE => quit program
-				out(0xDDDD 0);
         return 0; 
       } 
 			if (keyboard == 's') {
         if (p1_y < (height - p_height - padding)) {
-					out(0x0100 0);
           // P1 move down
           p1_y = p1_y + 1;
 
@@ -143,7 +147,6 @@ int main() {
         }
       } else if (keyboard == 'w') {
         if (p1_y > padding) {
-					out(0x0200 0);
           // P1 move up
           p1_y = p1_y - 1;
 
@@ -154,7 +157,6 @@ int main() {
       } 
 			if (keyboard == 'l') {
         if (p2_y < (height - p_height - padding)) {
-					out(0x0300 0);
           // P2 move down
           p2_y = p2_y + 1;
 
@@ -164,7 +166,6 @@ int main() {
         }
       } else if (keyboard == 'o') {
         if (p2_y > padding) {
-					out(0x0400 0);
           // P2 move up
           p2_y = p2_y - 1;
 
@@ -219,7 +220,7 @@ int main() {
 			// Draw board and score
 			i = 0;
 			char curr = 0;
-			while (i < 1200) {
+			while (i < (width*height)) {
 				curr = board[i];
 				if ((curr == bg) | (curr == point_zone1) | (curr == point_zone2)) {
 					// Draw blank bg
