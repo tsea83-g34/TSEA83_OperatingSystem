@@ -3,10 +3,9 @@ int out(long value int port) {
     asm ("out 0, $" value);
 }
 
-long SLEEP_MS_MULT = 7692;
-
 int sleep_ms(long ms) {
-    long wait_until = ms * SLEEP_MS_MULT;
+    // 7692 is the millisecond constant
+    long wait_until = 7692 * ms;
     long count = 0;
 
     while (count < wait_until) {
