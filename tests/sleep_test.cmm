@@ -7,7 +7,7 @@ int sleep_ms(long ms) {
     if (ms < 1000) out(0xFFFF 0);
     
     // 7692 is the millisecond constant
-    long wait_until = 7692 * ms;
+    long wait_until = 7692000;
     long count = 0;
 
     while (count < wait_until) {
