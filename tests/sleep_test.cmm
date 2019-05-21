@@ -11,7 +11,7 @@ int sleep_ms(long ms) {
     long wait_until = 7692 * ms;
     long count = 0;
 
-    if (count) count = 0; 
+    if (count) wait_until = 0; 
 
     while (count < ms) {
         
