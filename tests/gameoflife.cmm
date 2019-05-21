@@ -152,13 +152,22 @@ int update_changed() {
 long SLEEP_MS_MULT = 7692;
 
 int sleep_ms(long ms) {
-    long wait_until = ms * SLEEP_MS_MULT;
+    
+    // 7692 is the millisecond constant
+    long wait_until = 3846 * ms;
     long count = 0;
 
+    if (count) count = 0; 
+
     while (count < wait_until) {
+        
+        //if (ms == 0) out(0xBEEF 0);
+        //if (count < 0) out(0x0A55 0);
+
         count = count + 1;
     }
 }
+
 
 int next_gen() {
     calc_next_gen();
