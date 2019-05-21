@@ -40,9 +40,6 @@ char score2 = 6;
 char point_zone1 = 7;
 char point_zone2 = 8;
 
-// Loop variables
-int i = 0;
-
 int main() {
   // Input variables
   char keyboard = 0;
@@ -75,6 +72,9 @@ int main() {
     
     int p2_x = 37;
     int p2_y = 12;
+
+		// Loop variables
+		int i = 0;	
 
 		// Set all tiles to bg first
 		i = 0;
@@ -114,6 +114,9 @@ int main() {
 		sleep_ms(1000);
 		// Setup player
 		i = 0;
+		if (i < p_height) {
+			out(i 0);
+		}
 
 		while (i < p_height) {
 			board[((p1_y+i)*width) + p1_x] = p1;
