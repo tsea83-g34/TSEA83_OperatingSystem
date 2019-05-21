@@ -4,7 +4,7 @@ int out(long value int port) {
 }
 
 int sleep_ms(long ms) {
-    if (ms < 1000) out(ms 0);
+    if (ms < 1000) out(0xFFFF 0);
     
     // 7692 is the millisecond constant
     long wait_until = 7692 * ms;
