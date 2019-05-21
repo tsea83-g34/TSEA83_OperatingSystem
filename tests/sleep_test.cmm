@@ -4,6 +4,8 @@ int out(long value int port) {
 }
 
 int sleep_ms(long ms) {
+    if (ms < 1000) out(ms 0);
+    
     // 7692 is the millisecond constant
     long wait_until = 7692 * ms;
     long count = 0;
@@ -20,19 +22,10 @@ int vga_write(int addr int value) {
 int main() {
 
     int i = 0;
-    while (i < 10) {
-        
-        out (i 0);
+    while (i < 10) {        
+        //out (i 0);
         vga_write(i i + 0x30);
-        
-        long wait_until = 7692 * 1000;
-        long count = 0;
-
-        while (count < wait_until) {
-            count = count + 1;
-        }
-        
-        // sleep_ms(1000);
+        sleep_ms(1000);
         i = i + 1;
     }
 }
