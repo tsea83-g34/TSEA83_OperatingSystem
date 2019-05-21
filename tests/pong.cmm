@@ -225,32 +225,25 @@ int main() {
 					// Draw blank bg
 					BG_COLOR = 0;
 					print_c_at(' ' i);
-					out(0x0010 0);
 				} else if ((curr == wall) | (curr == p1) | (curr == p2)) {
 					// Draw wall
 					BG_COLOR = 1;
 					print_c_at(' ' i);
-					out(0x00E0 0);
 				} else if (curr == ball) {
 					// Draw ball
 					FG_COLOR = 2;
 					BG_COLOR = 2;
 					print_c_at(4 i); // @ at i pos
-					out(0x0030 0);
 				} else if (curr == score1) {
 					// Draw score 1
 					FG_COLOR = 3;
 					BG_COLOR = 3;
 					print_c_at((p1score + 30) i); // print p1 score
-					out(0x0040 0);
 				} else if (curr == score2) {
 					// Draw score 2
 					FG_COLOR = 3;
 					BG_COLOR = 3;
 					print_c_at((p2score + 30) i); // print p2 score
-					out(0x0050 0);
-				} else {
-					out(0x00F0 0);
 				}
 				i = i + 1;
 			}
@@ -266,7 +259,7 @@ int main() {
         winner = 2;
         game_running = 0;
       }
-			//sleep_ms(100);
+			sleep_ms(100);
     }
     
     // Print after game message and play again?
