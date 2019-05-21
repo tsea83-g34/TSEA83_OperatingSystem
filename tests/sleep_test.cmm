@@ -3,6 +3,8 @@ int out(long value int port) {
     asm ("out 0, $" value);
 }
 
+int sleep_m();
+
 int sleep_ms(long ms) {
     
     // 7692 is the millisecond constant
