@@ -19,6 +19,10 @@ int sleep_ms(long ms) {
     long wait_until = ms * SLEEP_MS_MULT;
     long count = 0;
 
+    // This if statement should not be needed, but this function does not work without it
+    // Note that the errors do not stem from the fact that count is not properly set to
+    if (count) count = 0;
+
     while (count < wait_until) {
         count = count + 1;
     }
