@@ -171,14 +171,29 @@ int main() {
     out(0xDEAD 0);
 
     // Draw glider in top left corner
-    add_changed(42);
+    /*add_changed(42);
     add_changed(83);
     add_changed(121);
     add_changed(122);
-    add_changed(123);
+    add_changed(123);*/
+
+    changed[changed_index] = 42;
+    changed_index = changed_index + 1;
+
+    changed[changed_index] = 83;
+    changed_index = changed_index + 1;
+
+    changed[changed_index] = 121;
+    changed_index = changed_index + 1;
+
+    changed[changed_index] = 122;
+    changed_index = changed_index + 1;
+
+    changed[changed_index] = 123;
+    changed_index = changed_index + 1;
 
     update_changed();
-    update_changed();
+    //update_changed();
     print_board();
 
     int gen_count = 0;
