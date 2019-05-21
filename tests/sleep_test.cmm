@@ -4,10 +4,22 @@ int out(long value int port) {
 }
 
 int sleep_ms(long ms) {
-    if (ms < 1000) out(0xFFFF 0);
     
     // 7692 is the millisecond constant
-    long wait_until = 7692000;
+    long wait_until = 7692 * ms;
+    long count = 0;
+
+    while (count < ms) {
+        out(count 0);
+        sleep_m();
+        count = count + 1;
+    }
+}
+
+int sleep_m() {
+    
+    // 7692 is the millisecond constant
+    long wait_until = 3846;
     long count = 0;
 
     while (count < wait_until) {
