@@ -15,8 +15,8 @@ int sleep_ms(long ms) {
 
     while (count < ms) {
         
-        if (ms == 0) out(0xBEEF 0);
-        if (count < 0) out(0x0A55 0);
+        //if (ms == 0) out(0xBEEF 0);
+        //if (count < 0) out(0x0A55 0);
 
         sleep_m();
         count = count + 1;
