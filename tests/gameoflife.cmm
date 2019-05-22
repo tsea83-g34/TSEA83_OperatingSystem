@@ -111,6 +111,7 @@ int print_tile(int index) {
 
     if (buffer[index]) {
         BG_COLOR = 3;
+        out (0xDEEF 0);
     } else {
         BG_COLOR = 0;
     }
