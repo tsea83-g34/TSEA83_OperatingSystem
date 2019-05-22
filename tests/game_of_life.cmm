@@ -1,4 +1,7 @@
 
+int out(int value) {
+    asm ("out 0, $" value);
+}
 
 int print_buffer(char* buffer) {
 
