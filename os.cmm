@@ -5,14 +5,7 @@ Basic os and terminal program for TSEA83 Computer design course at
 Linköpings Universitet written in the propriotary C-based language C--.
 */
 
-#include std_lib/std_lib.cmm
-#include std_lib/keyboard.cmm
-#include std_lib/string.cmm
-#include std_lib/shift.cmm
-#include std_lib/math.cmm
-#include std_lib/video.cmm
-#include std_lib/print.cmm
-
+#include std_lib/all.cmm
 #include user_programs/user_programs.cmm
 
 int main() {
@@ -44,62 +37,88 @@ int main() {
         buildning_buffer = 1;
 
         //Empty buffer
-        int i = 0;
-        while (i < 40) {
-            input_buffer[i] = 0;
-        }
+        memset(input_buffer 40 0);
         
+        // Output line start character
+        print_c('>');
+
         // Keyboard read loop
         while(buildning_buffer) {
             keyboard = read_char();
 
             // New input
-            if (keyboard != 0) {
+            if (keyboard) {
                 // Enter, decode the buffer
                 if (keyboard == '\n') {
                     input_buffer[index] = '\0';
                     buildning_buffer = 0;
                 }
+                // Backspace, remove last character
+                else if (keyboard == '\b') {
+                    // Dont remove past the first charactrer
+                    if (index != 0) {
+                        back_cursor();
+                        print_c_at(0 CURSOR);
+                        
+                        index = index - 1;
+                        input_buffer[index] = '\0';
+                    }
+                }
+                // Add character to buffer and screen
                 else {
                     input_buffer[index] = keyboard;
                     index = index + 1;
+                    print_c(keyboard);
                 }
             }
-
-            // Print input buffer to top line of screen
-            clear();
-            print_c('>');
-            print(input_buffer);
         }
 
         // Clear screen for user program
         clear();
 
         // =========== Find program index ===========
-        // Copy pointer to user program files buffer
-        programs_buff = USER_PROGRAMS;
 
-        program_index = 0;
-        searching = 1;
+        // Ignore if the input is empty
+        if (string_length(input_buffer) != 0) {
+            
+            // Copy pointer to user program files buffer
+            programs_buff = USER_PROGRAMS;
 
-        while((program_index < USER_PROGRAM_COUNT) & searching) {
+            program_index = 0;
+            searching = 1;
 
-            // Input matched program name
-            if (!string_compare(input_buffer programs_buff)) {
-                searching = 0;
+            while((program_index < USER_PROGRAM_COUNT) & searching) {
+                
+                out(0x000F 0);
+
+                // Input matched program name
+                if (string_compare(input_buffer programs_buff) == 0) {
+                    out(0x00F0 0);
+                    searching = 0;
+                }
+                // Countinue to next string
+                else {
+                    
+                    out(0x0F00 0);
+
+                    length = string_length(programs_buff);
+                    programs_buff = programs_buff + length;
+                    program_index = program_index + 1;
+                }
             }
-            // Countinue to next string
-            else {
-                length = string_length(programs_buff);
-                programs_buff = programs_buff + length;
-                program_index = program_index + 1;
-            }
-        }
 
-        // =========== Call function ===========
-        // Found program
-        if (program_index != USER_PROGRAM_COUNT) {
-            call_user_program(program_index);
+            // =========== Call function ===========
+            // Found program
+            if (program_index != USER_PROGRAM_COUNT) {
+                
+                out(0xF000 0);
+
+                call_user_program(program_index);
+            }
+
+            // Clear screen for terminal
+            load_basic_palette();
+            clear();
         }
     }
 }

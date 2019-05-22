@@ -20,10 +20,10 @@ for file in *; do
     [ $file = "generate_import" ] && continue
 
     # Build files string
-    files_string=${files_string}${file}'\0'
+    files_string=${files_string}${file::-4}'\\0'
 
     # Build include string
-    include_string=${include_string}"\n#include ${file};"
+    include_string=${include_string}"\n#include ${file}"
 
     # Build function string
     function_string=${function_string}"if (program == ${count}) {\n\t\t${file::-4}();\n\t}\n\telse "
