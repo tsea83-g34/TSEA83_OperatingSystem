@@ -102,7 +102,7 @@ int main() {
                     out(0x0F00 0);
 
                     length = string_length(programs_buff);
-                    programs_buff = programs_buff + length;
+                    programs_buff = programs_buff + length + 1;
                     program_index = program_index + 1;
                 }
             }
@@ -118,6 +118,8 @@ int main() {
 
             // Clear screen for terminal
             load_basic_palette();
+            FG_COLOR = 0;
+            BG_COLOR = 0;
             clear();
         }
     }
