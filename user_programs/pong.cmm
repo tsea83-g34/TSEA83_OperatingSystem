@@ -36,7 +36,7 @@ char point_zone2 = 8;
 char board[1200];
 
 // Output strings
-char starting[] = "STARTING...";
+char starting[] = " STARTING...";
 char player_won[] = "PLAYER X WON";
 char play_again[] = "PRESS ENTER TO PLAY AGAIN";
 char goal[] = "GOAL";
@@ -51,13 +51,13 @@ int pong() {
 	char print_y = 8;
 	char print_x = 19;
 
-	palette_index_write(0 TEMPLE_BLUE PURE_BLACK);     // background
-  palette_index_write(1 PURE_PINK TEMPLE_BLUE);    // wall
-  palette_index_write(2 PURE_PINK PURE_BLACK);     	 // ball
-  palette_index_write(3 TEMPLE_YELLOW PURE_BLACK); 	 // score
-	palette_index_write(4 TEMPLE_GREEN TEMPLE_GREEN); // player 1 score zone
-	palette_index_write(5 PURE_TEAL PURE_TEAL); 		  // player 2 score zone
-	palette_index_write(6 ATOM_BLUE PURE_BLACK); 	// printing colors
+	palette_index_write(0 ATOM_GRAY ATOM_GRAY);               // background
+  palette_index_write(1 TEMPLE_BLUE_DARK TEMPLE_BLUE_DARK); // wall
+  palette_index_write(2 ATOM_PINK ATOM_GRAY);     	        // ball
+  palette_index_write(3 ATOM_PINK TEMPLE_BLUE_DARK); 	      // score
+	palette_index_write(4 ATOM_GREEN ATOM_GREEN);             // point zone
+	palette_index_write(5 ATOM_WHITE ATOM_WHITE); 		        // player 
+	palette_index_write(6 (ATOM_PINK) (ATOM_GRAY+4));         	// printing colors
 
   // Main program loop
   while (1) {
@@ -157,7 +157,7 @@ int pong() {
 				FG_COLOR = 3;
 				set_cursor((print_x-3) print_y);
 				print(goodbye);
-				sleep_ms(2000);
+				sleep_ms(1000);
         return 0; 
       } 
 			if (keyboard == 's') {
@@ -266,17 +266,21 @@ int pong() {
 					print_c_at(' ' i);
 				} else if (curr == point_zone2) {
 					// Draw score zone 2
-					BG_COLOR = 5;
+					BG_COLOR = 4;
 					print_c_at(' ' i);
-				} else if ((curr == wall) | (curr == p1) | (curr == p2)) {
-					// Draw wall
+				} else if (curr == wall) {
+          // Draw wall
 					BG_COLOR = 1;
 					print_c_at(' ' i);
+        } else if ((curr == p1) | (curr == p2)) {
+					// Draw player
+          BG_COLOR = 5;
+          print_c_at(' ' i);
 				} else if (curr == ball) {
 					// Draw ball
 					FG_COLOR = 2;
 					BG_COLOR = 2;
-					print_c_at(4 i); // @ at i pos
+					print_c_at('@' i); // @ at i pos
 				} else if (curr == score1) {
 					// Draw score 1
 					FG_COLOR = 3;
@@ -332,7 +336,7 @@ int pong() {
 				FG_COLOR = 3;
 				set_cursor((print_x-3) print_y);
 				print(goodbye);
-				sleep_ms(2000);
+				sleep_ms(1000);
 				out(0xEEEE 0);
         return 0;
       }
