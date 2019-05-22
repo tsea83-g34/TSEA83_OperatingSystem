@@ -1,0 +1,85 @@
+/*
+C-- STANDARD LIB HEX_TO_STR
+
+Requires:
+    SHIFT
+    MATH
+*/
+
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
+#include ../std_lib/print.cmm
+
+/*  hex_to_char - Converts a number to a hexadecimal character
+    
+    Args:
+     * hex - the value to be converted [0, 15]
+
+    Returns:
+     char - the hexadecimal character [0, F]
+*/
+char hex_to_char(int hex) {
+
+    if (hex < 10) return hex + 0x30;
+    else if (hex == 10) return 'A';
+    else if (hex == 11) return 'B';
+    else if (hex == 12) return 'C';
+    else if (hex == 13) return 'D';
+    else if (hex == 14) return 'E';
+    else if (hex == 15) return 'F';
+    else                return '?';
+
+}
+
+/*  hex_to_str - Converts a number to a hexadecimal string
+    
+    Args:
+     * value - the value to be converted
+     * buffer - the buffer where the string will be written
+     * buffer_size - the size of the buffer
+
+    Returns:
+     int - the offset in the buffer where the string starts
+           if the value didn't fit, returns -1
+*/
+int hex_to_str(int value char* buffer int buffer_size) {
+
+    // Set up backward index
+    int backward_index = buffer_size - 1;
+    
+    // Set last character to null character
+    buffer[backward_index] = '\0';
+    backward_index = backward_index - 1;
+
+
+    while (value) {
+        // Buffer too small 
+        if (backward_index < 2) return -1;
+
+        // Mask out lowest hexadecimal character
+        int masked_value = value & 0x000F;
+
+        // Writeback to buffer
+        buffer[backward_index] = hex_to_char(masked_value);
+        
+        // Shift out the hexadecimal character
+        value = right_shift_i(value 4);
+
+        // Decrement index
+        backward_index = backward_index - 1;
+    }
+
+    buffer[backward_index] = 'x';
+    backward_index = backward_index - 1;
+    
+    buffer[backward_index] = '0';
+    return backward_index;
+}
+
+int main() {
+
+    char buffer[10];
+    int start_index = hex_to_str(0xDEAD buffer 10);
+    print(buffer + start_index);
+    
+}
