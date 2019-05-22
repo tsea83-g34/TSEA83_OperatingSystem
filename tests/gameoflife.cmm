@@ -21,7 +21,8 @@ int memset(char* destination int length char value) {
 
 int add_changed(int index) {
 
-    out (left_shift_i(changed_index 4) | index 0);
+    //out (left_shift_i(changed_index 4) | index 0);
+    out (changed_index 0);
     changed[changed_index] = index;
     changed_index = changed_index + 1;
 }
