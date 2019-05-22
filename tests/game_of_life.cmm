@@ -1,0 +1,30 @@
+
+
+int buffer_size = 1200;
+int buffer[1200];
+
+int print_buffer() {
+
+    int i = 0;
+    while (i < buffer_size) {
+        int color;
+        if (buffer[i]) {
+            color = 0x0300;
+        } else {
+            color = 0x0000;
+        }
+
+        asm("vgaw $, $, 0" i '\0');
+    }
+}
+
+int main() {
+
+    buffer[42] = 1;
+    buffer[83] = 1;
+    buffer[121] = 1;
+    buffer[122] = 1;
+    buffer[123] = 1;
+    
+    print_buffer();
+}
