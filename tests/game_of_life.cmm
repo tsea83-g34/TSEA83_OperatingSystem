@@ -16,7 +16,7 @@ int print_buffer(char* buffer) {
 }
 
 int main() {
-    int buffer[1200];
+    char buffer[1200];
 
     buffer[42] = 1;
     buffer[83] = 1;
