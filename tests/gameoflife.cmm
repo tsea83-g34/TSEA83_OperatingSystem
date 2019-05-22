@@ -90,7 +90,6 @@ int calc_next_gen() {
             if (neighbor_count == 3) {
                 changed[changed_index] = tile;
                 changed_index = changed_index + 1;
-                add_changed(tile);
             }
         }
 
