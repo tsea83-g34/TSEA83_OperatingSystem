@@ -122,7 +122,10 @@ int print_tile(int index) {
 int print_board() {
 
     int i = 0;
-    while (i < 1200) {
+
+    if (i != 0) i = 0;
+
+    while (i < VIDEO_TILES) {
         print_tile(i);        
         i = i + 1;
     }
