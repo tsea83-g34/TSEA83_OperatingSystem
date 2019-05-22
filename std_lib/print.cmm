@@ -256,7 +256,7 @@ int print(char* cb_p) {
 }
 
 /*  PRINT AT - Write a char buffer to the screen at a given starting position.
-   
+
     Args:
      * Char - Char pointer to the buffer to output
  
@@ -277,7 +277,7 @@ int print_at(char* cb_p int index) {
    
     Args:
      * Char - Char pointer to the buffer to output
- 
+
     Returns:
      void -
 */
