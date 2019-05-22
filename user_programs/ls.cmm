@@ -1,0 +1,31 @@
+/*
+TSEA83 PROJECT USER PROGRAM
+
+LS - A program for printing all user programs
+*/
+
+int ls() {
+    int i = 0;
+
+    char *name = USER_PROGRAMS;
+
+    // Print all user program names
+    while (i < USER_PROGRAM_COUNT) {
+        int length = string_length(name);
+        print(name);
+        name = name + length + 1;
+    }
+
+    new_line();
+    new_line();
+
+    char str[] = "Press ESC to quit.";
+
+    print(str);
+
+    // Poll for quit
+    char keyboard = 0;
+    while (keyboard != '\e'){
+        keyboard = read_char();
+    }
+}
