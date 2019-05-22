@@ -131,7 +131,7 @@ int main() {
 
         // Update buffer
         int i = 0;
-        out (i);
+        out (changed_index);
         while (i < changed_index) {
             int tile_index = changed[i];
 
