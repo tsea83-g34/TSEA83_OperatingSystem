@@ -266,7 +266,7 @@ int print(char* cb_p) {
 int print_at(char* cb_p int index) {
     char* start_p = cb_p;
     while (*cb_p) {
-        print_c_at(*cb_p index + (cb_p - start));
+        print_c_at(*cb_p index + (cb_p - start_p));
         cb_p = cb_p + 1;
     }
 }
@@ -287,7 +287,7 @@ int print_sprite(char* cb_p int index) {
         if (*cb_p == '\n') {
             index = index + VIDEO_TILE_WIDTH;
         }
-        print_c_at(*cb_p index + (cb_p - start));
+        print_c_at(*cb_p index + (cb_p - start_p));
         cb_p = cb_p + 1;
     }
 }
