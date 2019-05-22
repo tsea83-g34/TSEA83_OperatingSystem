@@ -1,12 +1,9 @@
 
 
-int buffer_size = 1200;
-int buffer[1200];
-
-int print_buffer() {
+int print_buffer(char* buffer) {
 
     int i = 0;
-    while (i < buffer_size) {
+    while (i < 1200) {
         int color;
         if (buffer[i]) {
             color = 0x0300;
@@ -19,6 +16,7 @@ int print_buffer() {
 }
 
 int main() {
+    int buffer[1200];
 
     buffer[42] = 1;
     buffer[83] = 1;
@@ -26,5 +24,5 @@ int main() {
     buffer[122] = 1;
     buffer[123] = 1;
     
-    print_buffer();
+    print_buffer(buffer);
 }
