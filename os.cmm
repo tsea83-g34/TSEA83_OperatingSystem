@@ -10,6 +10,8 @@ Linköpings Universitet written in the propriotary C-based language C--.
 
 int main() {
     
+    out(USER_PROGRAM_COUNT 0);
+
     // Setup buffer
     char input_buffer[40];
     int  index;
@@ -121,6 +123,7 @@ int main() {
             FG_COLOR = 0;
             BG_COLOR = 0;
             clear();
+            out(0xA55 0);
         }
     }
 }
