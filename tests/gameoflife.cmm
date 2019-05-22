@@ -6,8 +6,6 @@
 #include ../std_lib/video.cmm
 #include ../std_lib/print.cmm
 
-char buffer[40*30];
-
 int changed_index = 0;
 int changed[64];
 
@@ -107,7 +105,7 @@ int calc_next_gen() {
 
 }
 
-int print_tile(int index) {
+int print_tile(char* buffer int index) {
 
     if (buffer[index]) {
         BG_COLOR = 3;
@@ -119,14 +117,14 @@ int print_tile(int index) {
     print_c_at('\0' index);
 }
 
-int print_board() {
+int print_board(char* board) {
 
     int i = 0;
 
     if (i != 0) i = 0;
 
     while (i < 1200) {
-        print_tile(i);        
+        print_tile(board i);        
         i = i + 1;
     }
 }
@@ -162,6 +160,7 @@ int main() {
 
     // Reset buffer
     //memset(buffer VIDEO_TILES 0);
+    char buffer[1200];
 
     out(0xDEAD 0);
 
@@ -178,6 +177,7 @@ int main() {
     buffer[122] = 1;
     buffer[123] = 1;
 
+    print_board(buffer);
     /*changed[changed_index] = 42;
     changed_index = changed_index + 1;
 
@@ -195,7 +195,6 @@ int main() {
     
 
     //update_changed();
-    print_board();
 
     int gen_count = 0;
     while (1) {
