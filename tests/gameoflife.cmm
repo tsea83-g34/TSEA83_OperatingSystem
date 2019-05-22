@@ -172,7 +172,13 @@ int main() {
     add_changed(122);
     add_changed(123);*/
 
-    changed[changed_index] = 42;
+    buffer[42] = 1;
+    buffer[83] = 1;
+    buffer[121] = 1;
+    buffer[122] = 1;
+    buffer[123] = 1;
+
+    /*changed[changed_index] = 42;
     changed_index = changed_index + 1;
 
     changed[changed_index] = 83;
@@ -185,10 +191,10 @@ int main() {
     changed_index = changed_index + 1;
     
     changed[changed_index] = 123;
-    changed_index = changed_index + 1;
+    changed_index = changed_index + 1;*/
     
 
-    update_changed();
+    //update_changed();
     print_board();
 
     int gen_count = 0;
