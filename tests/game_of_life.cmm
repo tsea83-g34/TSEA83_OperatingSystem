@@ -11,7 +11,7 @@ int print_buffer(char* buffer) {
             color = 0x0000;
         }
 
-        asm("vgaw $, $, 0" i '\0');
+        asm("vgaw $, $, 0" i color);
     }
 }
 
