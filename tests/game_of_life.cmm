@@ -28,7 +28,7 @@ int update_changed(char* changed char* buffer int* changed_index) {
 
     int i = 0;
 
-    out (i 0);
+    out (i);
 
     while (i < *changed_index) {
         int tile = changed[i];
