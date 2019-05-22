@@ -19,6 +19,9 @@ for file in *; do
     # remove ignored files
     [ $file = "generate_import" ] && continue
 
+    # Build function declaration string
+    func_dec_string=${func_dec_string}"int "${file::-4}"();"'\n'
+
     # Build files string
     files_string=${files_string}${file::-4}'\\0'
 
@@ -33,14 +36,17 @@ for file in *; do
 
 done
 
-# Add includes
-echo -e $include_string >> user_programs.cmm
-echo '' >> user_programs.cmm
-
 # Add constants
 echo -e "char USER_PROGRAMS[] = \"${files_string}\";" >> user_programs.cmm
 echo -e "int USER_PROGRAM_COUNT = ${count};" >> user_programs.cmm
 
-# Add functions
+# Add function declaration
 echo '' >> user_programs.cmm
-echo -e "int call_user_program(int program) {\n\t"$function_string"{}\n}" >> user_programs.cmm
+echo -e $func_dec_string >> user_programs.cmm 
+
+# Add functions
+echo -e "int call_user_program(int program) {\n\t"$function_string"{}\n}" >> user_programs.cmm 
+
+# Add includes
+echo -e $include_string >> user_programs.cmm
+echo '' >> user_programs.cmm
