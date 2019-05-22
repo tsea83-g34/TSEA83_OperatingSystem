@@ -255,6 +255,43 @@ int print(char* cb_p) {
     }
 }
 
+/*  PRINT AT - Write a char buffer to the screen at a given starting position.
+    
+    Args:
+     * Char - Char pointer to the buffer to output
+
+    Returns:
+     void -
+*/
+int print_at(char* cb_p int index) {
+    char* start_p = cb_p;
+    while (*cb_p) {
+        print_c_at(*cb_p index + (cb_p - start));
+        cb_p = cb_p + 1;
+    }
+}
+
+/*  PRINT SPRITE - Write a char buffer to the screen at a given starting position.
+                   New line breaks the printing and jumps to the same cursor index
+                   on the line below.
+    
+    Args:
+     * Char - Char pointer to the buffer to output
+
+    Returns:
+     void -
+*/
+int print_sprite(char* cb_p int index) {
+    char* start_p = cb_p;
+    while (*cb_p) {
+        if (*cb_p == '\n') {
+            index = index + VIDEO_TILE_WIDTH;
+        }
+        print_c_at(*cb_p index + (cb_p - start));
+        cb_p = cb_p + 1;
+    }
+}
+
 /*  CLEAR - Clear the screen and reset the cursor
     
     Args:
