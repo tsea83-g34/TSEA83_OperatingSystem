@@ -19,12 +19,12 @@ int print_buffer(char* buffer) {
     }
 }
 
-int add_changed(char* changed_buffer int* changed_index int tile) {
+int add_changed(int* changed_buffer int* changed_index int tile) {
     changed_buffer[*changed_index] = tile;
     *changed_index = *changed_index + 1;
 }
 
-int update_changed(char* changed char* buffer int* changed_index) {
+int update_changed(int* changed char* buffer int* changed_index) {
 
     int i = 0;
 
@@ -44,17 +44,17 @@ int update_changed(char* changed char* buffer int* changed_index) {
 
 int main() {
     
-    char changed[64];
+    int changed[64];
     char buffer[1200];
     int changed_index = 0;
     
-    add_changed(changed &changed_index 42);
-    add_changed(changed &changed_index 83);
-    add_changed(changed &changed_index 121);
-    add_changed(changed &changed_index 122);
-    add_changed(changed &changed_index 123);
+    add_changed((changed) (&changed_index) (42));
+    add_changed((changed) (&changed_index) 83);
+    add_changed((changed) (&changed_index) 121);
+    add_changed((changed) (&changed_index) 122);
+    add_changed((changed) (&changed_index) 123);
 
-    update_changed(changed buffer &changed_index);
+    update_changed((changed) (buffer) (&changed_index));
     
     print_buffer(buffer);
 
