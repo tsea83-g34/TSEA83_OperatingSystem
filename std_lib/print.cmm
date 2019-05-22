@@ -301,6 +301,7 @@ int print_sprite(char* cb_p int index) {
 */
 int clear() {
     int i = 0;
+    out(i 0);
     while(i < VIDEO_TILES) {
         tile_index_write(0 i);
         i = i + 1;
