@@ -1,0 +1,124 @@
+#include ../std_lib/all.cmm
+
+/*  hex_to_char - Converts a number to a hexadecimal character
+    
+    Args:
+     * hex - the value to be converted [0, 15]
+
+    Returns:
+     char - the hexadecimal character [0, F]
+*/
+char hex_to_char(int hex) {
+
+    if (hex < 10) return hex + 0x30;
+    else if (hex == 10) return 'A';
+    else if (hex == 11) return 'B';
+    else if (hex == 12) return 'C';
+    else if (hex == 13) return 'D';
+    else if (hex == 14) return 'E';
+    else if (hex == 15) return 'F';
+    else                return '?';
+
+}
+
+/*  hex_to_str - Converts a number to a hexadecimal string
+    
+    Args:
+     * value - the value to be converted
+     * buffer - the buffer where the string will be written
+     * buffer_size - the size of the buffer
+
+    Returns:
+     int - the offset in the buffer where the string starts
+           if the value didn't fit, returns -1
+*/
+int hex_to_str(int value char* buffer int buffer_size) {
+
+    // Set up backward index
+    int backward_index = buffer_size - 1;
+    
+    // Set last character to null character
+    buffer[backward_index] = '\0';
+    backward_index = backward_index - 1;
+
+
+    while (value) {
+        // Buffer too small 
+        if (backward_index < 2) return -1;
+
+        // Mask out lowest hexadecimal character
+        int masked_value = value & 0x000F;
+
+        // Writeback to buffer
+        buffer[backward_index] = hex_to_char(masked_value);
+        
+        // Shift out the hexadecimal character
+        value = right_shift_i(value 4);
+
+        // Decrement index
+        backward_index = backward_index - 1;
+    }
+
+    buffer[backward_index] = 'x';
+    backward_index = backward_index - 1;
+    
+    buffer[backward_index] = '0';
+    return backward_index;
+}
+
+int print_data(int address int number_of_chunks) {
+    int data;
+    char buffer[5];
+    while(number_of_chunks) {
+        asm("load[1] $ $ 0" data address);
+        int first_idx = hex_to_str(data buffer 5);
+        print(buffer + first_idx); // TODO: Hex number
+        new_line();
+        number_of_chunks = number_of_chunks - 1;
+        address = address + 1;
+    }
+}
+
+int main (){
+    long keyboard;
+    long num = 0;
+    long last_num = 0;
+
+    int address = 0; // 0
+    int number_of_chunks = 0; // 1
+
+    int cur_number = 0;
+
+    while(1) {
+        keyboard = read_char();
+        out(CURSOR 0);
+
+        if(keyboard == '\n') {
+            new_line();
+            if (num == 0) {
+                number_of_chunks = 1;
+            }
+            print_data(address number_of_chunks);
+            cur_number = 0;
+            num = 0;
+        } else if(keyboard == '\b') {
+            num = last_num;
+            back_cursor();
+        } else if(keyboard == ' '){
+            cur_number = 1;
+        } else if ((keyboard >= 48) & (keyboard <= 57)) {
+            int new_digit = keyboard - 48;
+            last_num = num;
+            num = (num*10) + new_digit;
+            if (cur_number == 0) {
+                address = num;
+            } else {
+                number_of_chunks = num;
+            }
+            print_c(new_digit + 48);
+        } else {
+            // error
+            out(0xff 0);
+        }
+    }
+}
