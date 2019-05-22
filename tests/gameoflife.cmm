@@ -1,6 +1,7 @@
 
 #include ../std_lib/std_lib.cmm
 #include ../std_lib/shift.cmm
+#include ../std_lib/sleep.cmm
 #include ../std_lib/math.cmm
 #include ../std_lib/video.cmm
 #include ../std_lib/print.cmm
@@ -80,16 +81,14 @@ int calc_next_gen() {
             
             // Solitude and overpopulation
             if ((neighbor_count < 2) | (neighbor_count > 3)) {
-                changed[changed_index] = tile;
-                changed_index = changed_index + 1;
+                add_changed(tile);
                 out (0xD000 | tile 0);
             }
 
         } else {
             
             if (neighbor_count == 3) {
-                changed[changed_index] = tile;
-                changed_index = changed_index + 1;
+                add_changed(tile);
             }
         }
 
@@ -141,32 +140,11 @@ int update_changed() {
             buffer[tile_index] = 1;
         }
 
-        //print_tile(i);
         i = i + 1;
     }
 
     changed_index = 0;
 }
-
-long SLEEP_MS_MULT = 7692;
-
-int sleep_ms(long ms) {
-    
-    // 7692 is the millisecond constant
-    long wait_until = 3846 * ms;
-    long count = 0;
-
-    if (count) count = 0; 
-
-    while (count < wait_until) {
-        
-        //if (ms == 0) out(0xBEEF 0);
-        //if (count < 0) out(0x0A55 0);
-
-        count = count + 1;
-    }
-}
-
 
 int next_gen() {
     calc_next_gen();
@@ -181,35 +159,19 @@ int main() {
     out(0xDEAD 0);
 
     // Draw glider in top left corner
-    /*add_changed(42);
+    add_changed(42);
     add_changed(83);
     add_changed(121);
     add_changed(122);
-    add_changed(123);*/
-
-    changed[changed_index] = 42;
-    changed_index = changed_index + 1;
-
-    changed[changed_index] = 83;
-    changed_index = changed_index + 1;
-
-    changed[changed_index] = 121;
-    changed_index = changed_index + 1;
-
-    changed[changed_index] = 122;
-    changed_index = changed_index + 1;
-
-    changed[changed_index] = 123;
-    changed_index = changed_index + 1;
+    add_changed(123);
 
     update_changed();
-    //update_changed();
     print_board();
 
     int gen_count = 0;
     while (1) {
         //out(gen_count 0);
-        sleep_ms(100);
+        sleep_ms(1000);
         next_gen();
         print_board();
         gen_count = gen_count + 1;
