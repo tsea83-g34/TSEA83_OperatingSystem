@@ -6,8 +6,10 @@ Requires:
     MATH
 */
 
+#include ../std_lib/std_lib.cmm
 #include ../std_lib/shift.cmm
 #include ../std_lib/math.cmm
+#include ../std_lib/video.cmm
 #include ../std_lib/print.cmm
 
 /*  hex_to_char - Converts a number to a hexadecimal character
@@ -79,7 +81,7 @@ int hex_to_str(int value char* buffer int buffer_size) {
 int main() {
 
     char buffer[10];
-    int start_index = hex_to_str(0xDEAD buffer 10);
+    int start_index = hex_to_str(0xDEADA55 buffer 10);
     print(buffer + start_index);
-    
+
 }
