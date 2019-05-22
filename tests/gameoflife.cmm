@@ -25,7 +25,7 @@ int add_changed(int index) {
     changed_index = changed_index + 1;
 }
 
-int calc_next_gen() {
+int calc_next_gen(char* buffer) {
 
     // Set up tile position variables
     int tile = 0;
@@ -129,7 +129,7 @@ int print_board(char* board) {
     }
 }
 
-int update_changed() {
+int update_changed(char* buffer) {
 
     int i = 0;
     while (i < changed_index) {
@@ -151,9 +151,9 @@ int update_changed() {
     changed_index = 0;
 }
 
-int next_gen() {
-    calc_next_gen();
-    update_changed();
+int next_gen(char* buffer) {
+    calc_next_gen(buffer);
+    update_changed(buffer);
 }
 
 int main() {
@@ -200,8 +200,8 @@ int main() {
     while (1) {
         //out(gen_count 0);
         sleep_ms(1000);
-        next_gen();
-        print_board();
+        next_gen(buffer);
+        print_board(buffer);
         gen_count = gen_count + 1;
     }
 }
