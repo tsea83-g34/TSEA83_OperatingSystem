@@ -118,6 +118,8 @@ int main() {
 
             // Clear screen for terminal
             load_basic_palette();
+            FG_COLOR = 0;
+            BG_COLOR = 0;
             clear();
         }
     }
