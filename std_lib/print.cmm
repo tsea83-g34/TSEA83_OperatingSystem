@@ -30,7 +30,7 @@ int set_cursor(char x char y) {
 
     CURSOR_X = x;
     CURSOR_Y = y;
-    CURSOR   = x + y * VIDEO_TILE_WIDTH;
+    CURSOR   = x + (y * VIDEO_TILE_WIDTH);
 
     return 1;
 }
