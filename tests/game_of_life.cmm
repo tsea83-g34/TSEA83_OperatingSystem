@@ -16,14 +16,44 @@ int print_buffer(char* buffer) {
     }
 }
 
-int main() {
-    char buffer[1200];
+int add_changed(char* changed_buffer, int* changed_index, int tile) {
+    changed_buffer[*changed_index] = tile;
+    *changed_index = *changed_index + 1;
+}
 
-    buffer[42] = 1;
-    buffer[83] = 1;
-    buffer[121] = 1;
-    buffer[122] = 1;
-    buffer[123] = 1;
+int update_changed(char* changed, char* buffer, int* changed_index) {
+
+    int i = 0;
+
+    out (i 0);
+
+    while (i < *changed_index) {
+        int tile = changed[i];
+
+        if (buffer[tile])   buffer[tile] = 0; 
+        else                buffer[tile] = 1;
+
+        i = i + 1;
+    }
+
+    *changed_index = 0;
+}
+
+int main() {
+    
+    char changed[64];
+    char buffer[1200];
+    int changed_index = 0;
+    
+    add_changed(changed, &changed_index, 42);
+    add_changed(changed, &changed_index, 83);
+    add_changed(changed, &changed_index, 121);
+    add_changed(changed, &changed_index, 122);
+    add_changed(changed, &changed_index, 123);
+
+    update_changed(changed, buffer, &changed_index);
     
     print_buffer(buffer);
+
+
 }
