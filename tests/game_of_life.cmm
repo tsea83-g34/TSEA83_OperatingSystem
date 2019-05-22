@@ -12,6 +12,7 @@ int print_buffer(char* buffer) {
         }
 
         asm("vgaw $, $, 0" i color);
+        i = i + 1;
     }
 }
 
