@@ -121,7 +121,7 @@ int main() {
 		while (i < p_height) {
 			board[((p1_y+i)*width) + p1_x] = p1;
 			board[((p2_y+i)*width) + p2_x] = p2;
-			out(0x0A55 0);
+			out(0xfefe 0);
 			i = i + 1;
 		}
 
