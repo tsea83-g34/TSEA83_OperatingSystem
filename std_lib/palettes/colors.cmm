@@ -40,6 +40,9 @@ int ATOM_WHITE = 182;
 int ATOM_BLUE  = 87;
 int ATOM_RED   = 233;
 
+// Big bangus
+int ANGUS_PURPLE = 65;
+
 // Purple haze :DD
 int LIGHT_PURPLE_1 = 207; // pong player
 int DARK_PURPLE_1 = 166; // pong background 134 old value

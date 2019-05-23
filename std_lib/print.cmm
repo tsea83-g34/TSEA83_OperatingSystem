@@ -277,17 +277,22 @@ int print_at(char* cb_p int index) {
    
     Args:
      * Char - Char pointer to the buffer to output
+     * X    - X position of top left
+     * Y    - Y position of top left
 
     Returns:
      void -
 */
-int print_sprite(char* cb_p int index) {
+int print_sprite(char* cb_p int x int y) {
     char* start_p = cb_p;
     while (*cb_p) {
         if (*cb_p == '\n') {
-            index = index + VIDEO_TILE_WIDTH;
+            start_p = cb_p + 1;
+            y = y + 1;
         }
-        print_c_at(*cb_p index + (cb_p - start_p));
+        else {
+            print_c_at_pos(*cb_p x + (cb_p - start_p) y);
+        }
         cb_p = cb_p + 1;
     }
 }

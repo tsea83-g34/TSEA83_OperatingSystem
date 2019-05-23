@@ -7,6 +7,7 @@ Linköpings Universitet written in the propriotary C-based language C--.
 
 #include std_lib/all.cmm
 #include user_programs/user_programs.cmm
+#include MuxOS_logos.cmm
 
 int main() {
     // Setup buffer
@@ -37,9 +38,22 @@ int main() {
 
         //Empty buffer
         memset(input_buffer 40 0);
+
+        // Load colors
+        palette_index_write(3 PURE_ORANGE ANGUS_PURPLE);
         
+        // Print logo
+        FG_COLOR = 10;
+        BG_COLOR = 3;
+        print_sprite(LARGE_MUXOS_LOGO 1 1);
+
+        // Skip 25 lines
+        set_cursor(0 25);
+
         // Output line start character
+        BG_COLOR = 0;
         print_c('>');
+        FG_COLOR = 0;
 
         // Keyboard read loop
         while(buildning_buffer) {
@@ -74,6 +88,7 @@ int main() {
 
         // Clear screen for user program
         clear();
+        load_basic_palette();
 
         // =========== Find program index ===========
 
