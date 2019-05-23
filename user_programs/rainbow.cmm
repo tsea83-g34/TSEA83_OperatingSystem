@@ -8,26 +8,37 @@ int rainbow() {
     
     int index = 0;
     int color = 0;
-
-    // Print loop
-    while(index < VIDEO_TILES) {
-        //Only count the 11 colors
-        if (color >= 11) color = 0;
-
-        // Set color
-        BG_COLOR = 4 + color;
-
-        // Output nul character
-        print_c(0);
-
-        index = index + 1;
-        color = color + 1;
-        
-    }
- 
-    // Poll for quit
     char keyboard = 0;
-    while (keyboard != '\e'){
-        keyboard = read_char();
+    char goodbyee[] = "GOODBYE";
+    while(1) {
+        // Drawing loop
+        index = 0;
+        out(index 0);
+        while(index < VIDEO_TILES) {
+            // Poll for quit
+            keyboard = read_char();
+            if (keyboard == '\e'){
+                print(goodbyee);
+                sleep_ms(500);
+                return 0;
+            }
+
+            //Only count the 11 colors
+            if (color >= 11){
+               color = 0;
+            }       
+
+            // Set color
+            BG_COLOR = 4 + color;
+
+            // Output nul character
+            print_c(0);
+
+            index = index + 1;
+            color = color + 1;
+            sleep_ms(2);
+        }
     }
+
+    return 0;
 }
