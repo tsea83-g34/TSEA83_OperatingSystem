@@ -44,9 +44,9 @@ int main() {
         palette_index_write(3 PURE_ORANGE ANGUS_PURPLE);
         
         // Print logo
-        FG_COLOR = 3;
+        FG_COLOR = 10;
         BG_COLOR = 3;
-        print_sprite(LARGE_MUXOS_LOGO 1 0);
+        print_sprite(LARGE_MUXOS_LOGO 1 1);
 
         // Skip 25 lines
         set_cursor(0 25);
