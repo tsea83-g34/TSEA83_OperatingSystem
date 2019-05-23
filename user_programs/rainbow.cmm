@@ -24,7 +24,9 @@ int rainbow() {
             }
 
             //Only count the 11 colors
-            if (color >= 11) color = 0;
+            if (color >= 11){
+               color = 0;
+            }       
 
             // Set color
             BG_COLOR = 4 + color;
@@ -34,7 +36,7 @@ int rainbow() {
 
             index = index + 1;
             color = color + 1;
-            sleep_ms(10);
+            sleep_ms(2);
         }
     }
 

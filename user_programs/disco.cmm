@@ -9,8 +9,7 @@ int disco() {
     int index = 0;
     int color = 0;
     char palettes[16];
-    char curr_palette = 7;
-    char palette = 127;
+    char curr_palette = 0;
     char keyboard = 0;
     char goodbyee[] = "GOODBYE";
     BG_COLOR = 0;
@@ -19,7 +18,8 @@ int disco() {
     char i = 0;
     out(i 0);
     while (i < 16) {
-        palettes[i] = (i*16) + 8;
+        palettes[i] = (i*16) + 134;
+        palette_index_write(i palettes[i] palettes[i]);
         i = i + 1;
     }
     while(1) {
@@ -29,6 +29,7 @@ int disco() {
         while(index < VIDEO_TILES) {
             // Poll for quit
             keyboard = read_char();
+            out(keyboard 0);
             if (keyboard == '\e'){
                 print(goodbyee);
                 sleep_ms(1000);
@@ -39,15 +40,19 @@ int disco() {
                 index = index + 1;
             }
             // Update palette
+            char i = 0;
+            out(i 0);
+            while (i < 16) {
+                palettes[i] = palettes[i] + 1;
+                palette_index_write(i palettes[i] palettes[i]);
+                i = i + 1;
+            }
             curr_palette = curr_palette + 1;
-            palettes[curr_palette] = palettes[curr_palette] + 1;
+            out(curr_palette 0);
             if (curr_palette >= 16) {
                 curr_palette = 0;
             }
-            out(curr_palette 0);
-            palette = palettes[curr_palette];
             // Write pallette
-            palette_index_write(curr_palette palette palette);
 
             BG_COLOR = curr_palette;
             // Output nul character
@@ -55,7 +60,7 @@ int disco() {
 
             
             // Sleep
-            sleep_ms(5);
+            sleep_ms(4);
         }
     }
 
