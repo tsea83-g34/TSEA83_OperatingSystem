@@ -7,6 +7,7 @@ Linköpings Universitet written in the propriotary C-based language C--.
 
 #include std_lib/all.cmm
 #include user_programs/user_programs.cmm
+#include MuxOS_logos.cmm
 
 int main() {
     
@@ -39,6 +40,12 @@ int main() {
         //Empty buffer
         memset(input_buffer 40 0);
         
+        // Print logo
+        print_sprite(SMALL_MUXOS_LOGO 1 0);
+
+        // Skip 25 lines
+        set_cursor(0 25);
+
         // Output line start character
         print_c('>');
 
