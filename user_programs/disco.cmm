@@ -1,7 +1,7 @@
 /*
 TSEA83 PROJECT USER PROGRAM
  
-RAINBOW - A program for printing a colorful rainbow
+DISCO - A program for printing a colorful rainbow
 */
 
 int disco() {

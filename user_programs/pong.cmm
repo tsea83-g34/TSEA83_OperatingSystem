@@ -32,8 +32,6 @@ char score2 = 6;
 char point_zone1 = 7;
 char point_zone2 = 8;
 
-// Game variables
-char board[1200];
 char temp_meme = 0;
 // Output strings
 char starting[] = "STARTING...";
@@ -79,6 +77,9 @@ int pong() {
     
     int p2_x = 37;
     int p2_y = 12;
+
+    // Game variables
+    char board[1200];
 
 		// Loop variables
 		int i = 0;	
