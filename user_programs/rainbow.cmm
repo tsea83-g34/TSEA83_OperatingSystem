@@ -1,0 +1,33 @@
+/*
+TSEA83 PROJECT USER PROGRAM
+ 
+RAINBOW - A program for printing a colorful rainbow
+*/
+
+int rainbow() {
+    
+    int index = 0;
+    int color = 0;
+
+    // Print loop
+    while(index < VIDEO_TILES) {
+        //Only count the 11 colors
+        if (color >= 11) color = 0;
+
+        // Set color
+        BG_COLOR = 4 + color;
+
+        // Output nul character
+        print_c(0);
+
+        index = index + 1;
+        color = color + 1;
+        
+    }
+ 
+    // Poll for quit
+    char keyboard = 0;
+    while (keyboard != '\e'){
+        keyboard = read_char();
+    }
+}
