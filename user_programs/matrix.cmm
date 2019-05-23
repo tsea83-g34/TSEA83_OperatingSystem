@@ -9,6 +9,7 @@ int matrix() {
     int index = 0;
     char keyboard = 0;
     char goodbyeee[] = "GOODBYE";
+    long count = 0;
     palette_index_write(0 PURE_GREEN PURE_BLACK);
     FG_COLOR = 0;
     BG_COLOR = 0;
@@ -20,16 +21,24 @@ int matrix() {
             // Poll for quit
             keyboard = read_char();
             if (keyboard == '\e'){
+                set_cursor(16 14);
                 print(goodbyeee);
                 sleep_ms(500);
                 return 0;
             }
 
             // Output character
-            print_c_at(keyboard i);
+            print_c_at(keyboard index);
 
             index = index + 1;
-            sleep_ms(20);
+
+            // Busy wait for some time 
+            long wait_until = 1800;
+            count = 0;
+            out(count 0);
+            while (count < wait_until) {
+                count = count + 1;
+            }
         }
     }
 
