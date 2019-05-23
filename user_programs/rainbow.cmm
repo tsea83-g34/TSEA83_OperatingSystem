@@ -36,7 +36,6 @@ int rainbow() {
 
             index = index + 1;
             color = color + 1;
-            sleep_ms(2);
         }
     }
 
