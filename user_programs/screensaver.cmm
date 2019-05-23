@@ -16,13 +16,13 @@ int screensaver() {
     // Poll for keyboard and run
     char keyboard = 0;
     while (keyboard == 0){
-        // Right edge
-        if(x >= 29) {
+        // Right edge (Account for sprite padding)
+        if(x >= 30) {
             x_vel = -1;
             color = color + 1;
         }
-        // Left edge
-        if(x <= 0) {
+        // Left edge (Account for sprite padding)
+        if(x <= -1) {
             x_vel = 1;
             color = color + 1;
         }
