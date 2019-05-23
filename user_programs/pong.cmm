@@ -1,0 +1,384 @@
+/*
+  TSEA83 project 
+  
+  User program for simple pong game.
+
+  Author: Angus Lothian 2019, MUX-OS
+*/
+
+// Game constants
+int width = 40;
+int height = 30;
+
+int p_height = 5;
+
+int score1_x = 1;
+int score1_y = 0;
+int score2_x = 38;
+int score2_y = 0;
+
+int padding = 2;
+
+int win_score = 3;
+
+// tile versions
+char bg = 0;
+char wall = 1;
+char p1 = 2;
+char p2 = 3;
+char ball = 4;
+char score1 = 5;
+char score2 = 6;
+char point_zone1 = 7;
+char point_zone2 = 8;
+
+char temp_meme = 0;
+// Output strings
+char starting[] = "STARTING...";
+char player_won[] = "PLAYER X WON";
+char play_again[] = "PRESS ENTER TO PLAY AGAIN";
+char goal[] = "GOOOOOAAAAAL";
+char remaking[] = "REMAKING...";
+char goodbye[] = "GOODBYE";
+
+int pong() {
+  // Input variables
+  char keyboard = 0;
+
+	// Priting variables
+	char print_y = 8;
+	char print_x = 19;
+
+	palette_index_write(0 DARK_PURPLE_1 DARK_PURPLE_1);   // background
+  palette_index_write(1 DARK_PURPLE_2 DARK_PURPLE_2);   // wall
+  palette_index_write(2 ATOM_PINK DARK_PURPLE_1);     	// ball
+  palette_index_write(3 ATOM_PINK DARK_PURPLE_2); 	    // score
+	palette_index_write(4 DARK_PURPLE_1 DARK_PURPLE_1);   // point zone
+	palette_index_write(5 ATOM_PINK ATOM_PINK);   // player 
+	palette_index_write(6 ATOM_PINK DARK_PURPLE_2);       // text
+
+  // Main program loop
+  while (1) {
+    // Setup variables
+    int game_running = 1;
+    int p1score = 0;
+    int p2score = 0;
+    char winner = 0;
+
+    int ball_x = 19;
+    int ball_y = 14;
+    int ball_n_x = 0;
+    int ball_n_y = 0;
+    int ball_d_x = 1;
+    int ball_d_y = 1;
+
+    int p1_x = 2;
+    int p1_y = 12;
+    
+    int p2_x = 37;
+    int p2_y = 12;
+
+    // Game variables
+    char board[1200];
+
+		// Loop variables
+		int i = 0;	
+
+    // Input variables
+    int p1move = 0; // 0 nothing, -1 down, 1 up
+    int p2move = 0; // 0 nothing, -1 down, 1 up
+
+		// Set all tiles to bg first
+		i = 0;
+		while (i < 1200) {
+			board[i] = bg;
+			i = i + 1;
+		}	
+
+		out(0x1111 0);
+		// Setup player
+		i = 2;
+		if (i < (height - padding)) {
+			out(i 0);
+		}
+
+		// Setup point zones
+		while (i < (height - padding)) {
+			board[(i*width)] = point_zone1;
+			board[(i*width) + 1] = point_zone1;
+
+			board[(i*width) + (width-2)] = point_zone2;
+			board[(i*width) + (width-1)] = point_zone2;
+			i = i + 1;
+		}	
+
+		// Setup wall
+		i = 0;
+		while (i < width) {
+			// Upper wall
+			board[i] = wall;
+			board[(width) + i] = wall;
+
+			board[((height-2) * width) + i] = wall;
+			board[((height-1) * width) + i] = wall;
+			i = i + 1;
+		}
+
+		// Setup scores
+		board[(score1_y*width) + score1_x] = score1;
+		board[(score2_y*width) + score2_x] = score2;
+
+		// Setup player
+		out(0xfefe 0);
+		i = 0;
+		if (i == 0) {
+			out(i 0);
+		}
+		while (i < p_height) {
+			board[((p1_y+i)*width) + p1_x] = p1;
+			board[((p2_y+i)*width) + p2_x] = p2;
+			out(0x1010 0);
+			i = i + 1;
+		}
+
+
+		// Setup ball
+		board[(ball_y*width) + ball_x] = ball;
+
+    // Main game loop
+		out(0x000F 0);
+		
+		set_cursor((print_x-5) (print_y-2));
+		BG_COLOR = 6;
+		FG_COLOR = 6;
+		print(starting);
+		sleep_ms(1000);
+    while (game_running == 1) {
+      // Poll input
+      long wait_until = 100 * 384; // sleep time
+      long count = 0;
+
+      // This if statement should not be needed, but this function does not work without it
+      // Note that the errors do not stem from the fact that count is not properly set to
+      out(count 0);
+      p1move = 0;
+      p2move = 0;
+      while (count < wait_until) {
+        keyboard = read_char();
+        out(keyboard 0);
+        // Check input val
+        if (keyboard == 27) {
+          // ESCAPE => quit program
+          BG_COLOR = 6;
+          FG_COLOR = 6;
+          set_cursor((print_x-3) (print_y-2));
+          print(goodbye);
+          sleep_ms(1000);
+          return 0; 
+
+        } else if (keyboard == 's') {
+          p1move = -1;
+        } else if (keyboard == 'w') {
+          p1move = 1;
+        } else if (keyboard == 'l') {
+          p2move = -1;
+        } else if (keyboard == 'o') {
+          p2move = 1;
+        }
+
+        count = count + 1;
+      }
+
+      // Update player pos
+    
+			if (p1move == -1) {
+        if (p1_y < (height - p_height - padding)) {
+          // P1 move down
+          p1_y = p1_y + 1;
+
+          // Update board
+          board[((p1_y-1)*width) + p1_x] = bg;
+          board[((p1_y + (p_height-1))*width) + p1_x] = p1;
+        }
+      } else if (p1move == 1) {
+        if (p1_y > padding) {
+          // P1 move up
+          p1_y = p1_y - 1;
+
+          // Update board
+          board[(p1_y*width) + p1_x] = p1;
+          board[((p1_y + p_height)*width) + p1_x] = bg;
+        }
+      } 
+			if (p2move == -1) {
+        if (p2_y < (height - p_height - padding)) {
+          // P2 move down
+          p2_y = p2_y + 1;
+
+          // Update board
+          board[((p2_y-1)*width) + p2_x] = bg;
+          board[((p2_y + (p_height-1))*width) + p2_x] = p2;
+        }
+      } else if (p2move == 1) {
+        if (p2_y > padding) {
+          // P2 move up
+          p2_y = p2_y - 1;
+
+          // Update board
+          board[(p2_y*width) + p2_x] = p2;
+          board[((p2_y + p_height)*width) + p2_x] = bg;
+        }
+      }
+
+      // Calc new ball position
+      ball_n_x = ball_x + ball_d_x;
+      ball_n_y = ball_y + ball_d_y;
+
+      // Check collision, update score if necessary
+      char ball_n_pos = board[(ball_n_y*width) + ball_n_x];
+      
+      if (ball_n_pos == wall) {
+        // Collide with wall, bounce in y direction
+        ball_d_y = -ball_d_y;
+        ball_n_x = ball_x + ball_d_x;
+        ball_n_y = ball_y + ball_d_y;
+      } else if ((ball_n_pos == p1) | (ball_n_pos == p2)) {
+				ball_d_x = -ball_d_x;
+        ball_n_x = ball_x + ball_d_x;
+        ball_n_y = ball_y + ball_d_y;
+			} else if (ball_n_pos == point_zone1) {
+        // Player 2 made a goal
+        p2score = p2score + 1;
+        // Reset ball position and direction
+        ball_n_x = 19;
+        ball_n_y = 14;
+        ball_d_x = 1;
+        ball_d_y = 1;
+				BG_COLOR = 6;
+				FG_COLOR = 6;
+				set_cursor((print_x+2) print_y-3);
+				print(goal);
+				sleep_ms(1000);
+      } else if (ball_n_pos == point_zone2) {
+        // Player 1 made a goal
+        p1score = p1score + 1;
+        // Reset ball position and direction
+        ball_n_x = 19;
+        ball_n_y = 14;
+        ball_d_x = -1;
+        ball_d_y = -1;
+				BG_COLOR = 6;
+				FG_COLOR = 6;
+				set_cursor((print_x-10) (print_y-3));
+				print(goal);
+				sleep_ms(1000);
+      }
+
+      // Update board
+      board[(ball_y*width) + ball_x] = bg;
+      board[(ball_n_y*width) + ball_n_x] = ball;
+      
+      // Update ball p  osition
+      ball_x = ball_n_x;
+      ball_y = ball_n_y;
+
+			// Draw board and score
+			i = 0;
+			char curr = 0;
+			while (i < (width*height)) {
+				curr = board[i];
+				if (curr == bg) {
+					// Draw blank bg
+					BG_COLOR = 0;
+					print_c_at(' ' i);
+				} else if (curr == point_zone1) {
+					// Draw score zone 1
+					BG_COLOR = 4;
+					print_c_at(' ' i);
+				} else if (curr == point_zone2) {
+					// Draw score zone 2
+					BG_COLOR = 4;
+					print_c_at(' ' i);
+				} else if (curr == wall) {
+          // Draw wall
+					BG_COLOR = 1;
+					print_c_at(' ' i);
+        } else if ((curr == p1) | (curr == p2)) {
+					// Draw player
+          BG_COLOR = 5;
+          print_c_at(' ' i);
+				} else if (curr == ball) { // print ball
+					// Draw ball
+					FG_COLOR = 2;
+					BG_COLOR = 2;
+					print_c_at('o' i); 
+				} else if (curr == score1) { // print p1 score
+					// Draw score 1
+					FG_COLOR = 3;
+					BG_COLOR = 3;
+					print_c_at((p1score + 0x30) i); 
+				} else if (curr == score2) { // print p2 score
+					// Draw score 2
+					FG_COLOR = 3;
+					BG_COLOR = 3;
+					print_c_at((p2score + 0x30) i); 
+				}
+				i = i + 1;
+			}
+			out(0x00FF 0);
+			
+      // Check points, end game if should
+      if (p1score >= win_score) {
+        // P1 wins
+        winner = 1;
+        game_running = 0;
+      } else if (p2score >= win_score) {
+        // P2 wins
+        winner = 2;
+        game_running = 0;
+      }
+    }
+    
+    // Print after game message and play again?
+    out(winner 0);
+		player_won[7] = (winner + 0x30);
+		BG_COLOR = 6;
+		FG_COLOR = 6;
+		set_cursor((print_x-7) print_y);
+		print(player_won);
+
+		set_cursor((print_x-12) (print_y + 3));
+		print(play_again);
+
+    // Check if play again or quit
+    int play_again = 0;
+		if (play_again == 0) {
+			out(play_again 0);
+		}
+    while (play_again == 0) {
+      keyboard = read_char();
+			out(board[0] 0);
+      if (keyboard == '\n') {
+        play_again = 1;
+      } else if (keyboard == 27) { 
+        // ESCAPE
+				BG_COLOR = 3;
+				FG_COLOR = 3;
+				set_cursor((print_x-3) (print_y-2));
+				print(goodbye);
+				sleep_ms(1000);
+				out(0xEEEE 0);
+        return 0;
+      }
+    } 
+		out(0xFFFF 0);
+		BG_COLOR = 6;
+		FG_COLOR = 6;
+		set_cursor((print_x-4) (print_y-2));
+		print(remaking);
+		sleep_ms(500);
+  }
+
+	// If somehow comes here, exit
+  return 0;
+}

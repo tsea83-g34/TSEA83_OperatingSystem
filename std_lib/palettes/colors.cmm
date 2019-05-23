@@ -33,7 +33,7 @@ int TEMPLE_YELLOW_DARK = 108;
 int TEMPLE_GREEN_DARK  = 77;
 
 // Atom ONE dark
-int ATOM_PINK  = 207;
+int ATOM_PINK  = 207; // EPIC
 int ATOM_GRAY  = 36;
 int ATOM_GREEN = 118;
 int ATOM_WHITE = 182;
@@ -42,3 +42,9 @@ int ATOM_RED   = 233;
 
 // Big bangus
 int ANGUS_PURPLE = 65;
+
+// Purple haze :DD
+int LIGHT_PURPLE_1 = 207; // pong player
+int DARK_PURPLE_1 = 166; // pong background 134 old value
+int DARK_PURPLE_2 = 134; // pong wall
+int LIGHT_PURPLE_2 = 234; // pong point zone

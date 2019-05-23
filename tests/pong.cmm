@@ -1,0 +1,293 @@
+/*
+  TSEA83 project 
+  
+  Test for simple pong game
+*/
+
+#include ../std_lib/std_lib.cmm
+#include ../std_lib/shift.cmm
+#include ../std_lib/math.cmm
+#include ../std_lib/video.cmm
+#include ../std_lib/string.cmm
+#include ../std_lib/print.cmm
+#include ../std_lib/keyboard.cmm
+#include ../std_lib/sleep.cmm
+#include ../std_lib/palettes/colors.cmm
+
+// Game constants
+int width = 40;
+int height = 30;
+
+int p_height = 5;
+
+int score1_x = 1;
+int score1_y = 1;
+int score2_x = 38;
+int score2_y = 1;
+
+int padding = 2;
+
+int win_score = 3;
+
+// tile versions
+char bg = 0;
+char wall = 1;
+char p1 = 2;
+char p2 = 3;
+char ball = 4;
+char score1 = 5;
+char score2 = 6;
+char point_zone1 = 7;
+char point_zone2 = 8;
+
+int main() {
+  // Input variables
+  char keyboard = 0;
+
+  // Game variables
+  char board[(40*30)];
+
+	palette_index_write(0 PURE_BLACK PURE_BLACK);    // background
+  palette_index_write(1 TEMPLE_BLUE TEMPLE_BLUE);  // wall
+  palette_index_write(2 PURE_PINK PURE_BLACK);     // ball
+  palette_index_write(3 TEMPLE_YELLOW PURE_BLACK); // score
+
+  // Main program loop
+  while (1) {
+    // Setup variables
+    int game_running = 1;
+    int p1score = 0;
+    int p2score = 0;
+    int winner = 0;
+
+    int ball_x = 19;
+    int ball_y = 14;
+    int ball_n_x = 0;
+    int ball_n_y = 0;
+    int ball_d_x = 1;
+    int ball_d_y = 1;
+
+    int p1_x = 2;
+    int p1_y = 12;
+    
+    int p2_x = 37;
+    int p2_y = 12;
+
+		// Loop variables
+		int i = 0;	
+
+		// Set all tiles to bg first
+		i = 0;
+		while (i < 1200) {
+			board[i] = bg;
+			i = i + 1;
+		}	
+
+		// Setup walls
+		i = 2;
+		while (i < (height - padding)) {
+			board[(i*width)] = point_zone1;
+			board[(i*width) + 1] = point_zone1;
+
+			board[(i*width) + (width-2)] = point_zone2;
+			board[(i*width) + (width-1)] = point_zone2;
+			i = i + 1;
+		}	
+
+		// Setup point zones
+		i = 0;
+		while (i < width) {
+			// Upper wall
+			board[i] = wall;
+			board[(width) + i] = wall;
+
+			board[((height-2) * width) + i] = wall;
+			board[((height-1) * width) + i] = wall;
+			i = i + 1;
+		}
+
+		// Setup scores
+		board[(score1_y*width) + score1_x] = score1;
+		board[(score2_y*width) + score2_x] = score2;
+
+		out(0x1111 0);
+		sleep_ms(1000);
+		// Setup player
+		i = 0;
+		if (i < p_height) {
+			out(i 0);
+		}
+
+		while (i < p_height) {
+			board[((p1_y+i)*width) + p1_x] = p1;
+			board[((p2_y+i)*width) + p2_x] = p2;
+			out(0xfefe 0);
+			i = i + 1;
+		}
+
+		sleep_ms(5000);
+
+		// Setup ball
+		board[(ball_y*width) + ball_x] = ball;
+
+    // Main game loop
+		out(0x000F 0);
+    while (game_running == 1) {
+      // Read keyboard, update player pos
+      keyboard = read_char();
+      if (keyboard == 27) {
+        // ESCAPE => quit program
+        return 0; 
+      } 
+			if (keyboard == 's') {
+        if (p1_y < (height - p_height - padding)) {
+          // P1 move down
+          p1_y = p1_y + 1;
+
+          // Update board
+          board[((p1_y-1)*width) + p1_x] = bg;
+          board[((p1_y + (p_height-1))*width) + p1_x] = p1;
+        }
+      } else if (keyboard == 'w') {
+        if (p1_y > padding) {
+          // P1 move up
+          p1_y = p1_y - 1;
+
+          // Update board
+          board[(p1_y*width) + p1_x] = p1;
+          board[((p1_y + p_height)*width) + p1_x] = bg;
+        }
+      } 
+			if (keyboard == 'l') {
+        if (p2_y < (height - p_height - padding)) {
+          // P2 move down
+          p2_y = p2_y + 1;
+
+          // Update board
+          board[((p2_y-1)*width) + p2_x] = bg;
+          board[((p2_y + (p_height-1))*width) + p2_x] = p2;
+        }
+      } else if (keyboard == 'o') {
+        if (p2_y > padding) {
+          // P2 move up
+          p2_y = p2_y - 1;
+
+          // Update board
+          board[(p2_y*width) + p2_x] = p2;
+          board[((p2_y + p_height)*width) + p2_x] = bg;
+        }
+      }
+
+      // Calc new ball position
+      ball_n_x = ball_x + ball_d_x;
+      ball_n_y = ball_y + ball_d_y;
+
+      // Check collision, update score if necessary
+      char ball_n_pos = board[(ball_n_y*width) + ball_n_x];
+      
+      if (ball_n_pos == wall) {
+        // Collide with wall, bounce in y direction
+        ball_d_y = -ball_d_y;
+        ball_n_x = ball_x + ball_d_x;
+        ball_n_y = ball_y + ball_d_y;
+      } else if ((ball_n_pos == p1) | (ball_n_pos == p2)) {
+				ball_d_x = -ball_d_x;
+        ball_n_x = ball_x + ball_d_x;
+        ball_n_y = ball_y + ball_d_y;
+			} else if (ball_n_pos == point_zone1) {
+        // Player 2 made a goal
+        p2score = p2score + 1;
+        // Reset ball position and direction
+        ball_n_x = 19;
+        ball_n_y = 14;
+        ball_d_x = 1;
+        ball_d_y = 1;
+      } else if (ball_n_pos == point_zone2) {
+        // Player 1 made a goal
+        p2score = p2score + 1;
+        // Reset ball position and direction
+        ball_n_x = 19;
+        ball_n_y = 14;
+        ball_d_x = -1;
+        ball_d_y = -1;
+      }
+
+      // Update board
+      board[(ball_y*width) + ball_x] = bg;
+      board[(ball_n_y*width) + ball_n_x] = ball;
+      
+      // Update ball p  osition
+      ball_x = ball_n_x;
+      ball_y = ball_n_y;
+
+			// Draw board and score
+			i = 0;
+			char curr = 0;
+			while (i < (width*height)) {
+				curr = board[i];
+				if ((curr == bg) | (curr == point_zone1) | (curr == point_zone2)) {
+					// Draw blank bg
+					BG_COLOR = 0;
+					print_c_at(' ' i);
+				} else if ((curr == wall) | (curr == p1) | (curr == p2)) {
+					// Draw wall
+					BG_COLOR = 1;
+					print_c_at(' ' i);
+				} else if (curr == ball) {
+					// Draw ball
+					FG_COLOR = 2;
+					BG_COLOR = 2;
+					print_c_at(4 i); // @ at i pos
+				} else if (curr == score1) {
+					// Draw score 1
+					FG_COLOR = 3;
+					BG_COLOR = 3;
+					print_c_at((p1score + 30) i); // print p1 score
+				} else if (curr == score2) {
+					// Draw score 2
+					FG_COLOR = 3;
+					BG_COLOR = 3;
+					print_c_at((p2score + 30) i); // print p2 score
+				}
+				i = i + 1;
+			}
+			out(0x00FF 0);
+			
+      // Check points, end game if should
+      if (p1score >= win_score) {
+        // P1 wins
+        winner = 1;
+        game_running = 0;
+      } else if (p2score >= win_score) {
+        // P2 wins
+        winner = 2;
+        game_running = 0;
+      }
+			sleep_ms(100);
+    }
+    
+    // Print after game message and play again?
+    out(winner 0);
+
+    // Check if play again or quit
+    int play_again = 0;
+    while (play_again == 0) {
+      keyboard = read_char();
+
+      if (keyboard == '\n') {
+        play_again = 1;
+      } else if (keyboard == 27) { 
+        // ESCAPE
+				out(0xEEEE 0);
+        return 0;
+      }
+    } 
+
+    // If somehow comes here, exit
+		out(0xFFFF 0);
+    return 0;
+  }
+
+	// If somehow comes here, exit
+  return 0;
+}

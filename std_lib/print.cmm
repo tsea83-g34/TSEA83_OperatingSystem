@@ -256,10 +256,10 @@ int print(char* cb_p) {
 }
 
 /*  PRINT AT - Write a char buffer to the screen at a given starting position.
-    
+
     Args:
      * Char - Char pointer to the buffer to output
-
+ 
     Returns:
      void -
 */
@@ -270,11 +270,11 @@ int print_at(char* cb_p int index) {
         cb_p = cb_p + 1;
     }
 }
-
+ 
 /*  PRINT SPRITE - Write a char buffer to the screen at a given starting position.
                    New line breaks the printing and jumps to the same cursor index
                    on the line below.
-    
+   
     Args:
      * Char - Char pointer to the buffer to output
      * X    - X position of top left
@@ -306,6 +306,7 @@ int print_sprite(char* cb_p int x int y) {
 */
 int clear() {
     int i = 0;
+    out(i 0);
     while(i < VIDEO_TILES) {
         tile_index_write(0 i);
         i = i + 1;

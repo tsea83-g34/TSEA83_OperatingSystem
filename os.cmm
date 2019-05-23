@@ -10,7 +10,6 @@ Linköpings Universitet written in the propriotary C-based language C--.
 #include MuxOS_logos.cmm
 
 int main() {
-    
     // Setup buffer
     char input_buffer[40];
     int  index;
@@ -103,21 +102,15 @@ int main() {
             searching = 1;
 
             while((program_index < USER_PROGRAM_COUNT) & searching) {
-                
-                out(0x000F 0);
 
                 // Input matched program name
                 if (string_compare(input_buffer programs_buff) == 0) {
-                    out(0x00F0 0);
                     searching = 0;
                 }
                 // Countinue to next string
                 else {
-                    
-                    out(0x0F00 0);
-
                     length = string_length(programs_buff);
-                    programs_buff = programs_buff + length;
+                    programs_buff = programs_buff + length + 1;
                     program_index = program_index + 1;
                 }
             }
@@ -125,14 +118,13 @@ int main() {
             // =========== Call function ===========
             // Found program
             if (program_index != USER_PROGRAM_COUNT) {
-                
-                out(0xF000 0);
-
                 call_user_program(program_index);
             }
 
             // Clear screen for terminal
             load_basic_palette();
+            FG_COLOR = 0;
+            BG_COLOR = 0;
             clear();
         }
     }
