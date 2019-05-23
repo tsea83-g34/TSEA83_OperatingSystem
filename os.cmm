@@ -103,7 +103,10 @@ int main() {
             // =========== Call function ===========
             // Found program
             if (program_index != USER_PROGRAM_COUNT) {
+                // Argparse
+                
                 call_user_program(program_index);
+                
             }
 
             // Clear screen for terminal
