@@ -1,0 +1,63 @@
+/*
+TSEA83 PROJECT USER PROGRAM
+ 
+RAINBOW - A program for printing a colorful rainbow
+*/
+
+int disco() {
+    
+    int index = 0;
+    int color = 0;
+    char palettes[16];
+    char curr_palette = 7;
+    char palette = 127;
+    char keyboard = 0;
+    char goodbyee[] = "GOODBYE";
+    BG_COLOR = 0;
+    // Program loop
+    // Set palette
+    char i = 0;
+    out(i 0);
+    while (i < 16) {
+        palettes[i] = (i*16) + 8;
+        i = i + 1;
+    }
+    while(1) {
+        // Drawing loop
+        index = 0;
+        out(index 0);
+        while(index < VIDEO_TILES) {
+            // Poll for quit
+            keyboard = read_char();
+            if (keyboard == '\e'){
+                print(goodbyee);
+                sleep_ms(1000);
+                return 0;
+            } else if (keyboard == 'a') { 
+                index = index + 31;
+            } else {
+                index = index + 1;
+            }
+            // Update palette
+            curr_palette = curr_palette + 1;
+            palettes[curr_palette] = palettes[curr_palette] + 1;
+            if (curr_palette >= 16) {
+                curr_palette = 0;
+            }
+            out(curr_palette 0);
+            palette = palettes[curr_palette];
+            // Write pallette
+            palette_index_write(curr_palette palette palette);
+
+            BG_COLOR = curr_palette;
+            // Output nul character
+            print_c(0);
+
+            
+            // Sleep
+            sleep_ms(5);
+        }
+    }
+
+    return 0;
+}
