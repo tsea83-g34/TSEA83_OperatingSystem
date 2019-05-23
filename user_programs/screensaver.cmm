@@ -1,0 +1,60 @@
+/*
+TSEA83 PROJECT USER PROGRAM
+ 
+SCREENSAVER - A screen saver program
+*/
+ 
+int screensaver() {
+    int x_vel = 1;
+    int y_vel = 1;
+
+    int x = 14;
+    int y = 19;
+
+    int color = 4;
+
+    // Poll for keyboard and run
+    char keyboard = 0;
+    while (keyboard == 0){
+        // Right edge
+        if(x >= 29) {
+            x_vel = -1;
+            color = color + 1;
+        }
+        // Left edge
+        if(x <= 0) {
+            x_vel = 1;
+            color = color + 1;
+        }
+        // Top edge
+        if(y <= 0) {
+            y_vel = 1;
+            color = color + 1;
+        }
+        // Bottom edge
+        if(y >= 24) {
+            y_vel = -1;
+            color = color + 1;
+        }
+    
+        // Set color
+        FG_COLOR = 4 + color;
+
+        //Only count the 11 colors
+        if (color >= 11){
+            color = 0;
+        }
+
+        // Increase position
+        x = x + x_vel;
+        y = y + y_vel;
+
+        // Print
+        clear();
+        print_sprite(SMALL_MUXOS_LOGO x y);
+
+        sleep_ms(250);
+
+        keyboard = read_char();
+    }
+}
