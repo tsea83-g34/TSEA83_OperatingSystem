@@ -45,4 +45,4 @@ int LIGHT_PURPLE_2 = 220;
 int LIGHT_PURPLE_1 = 207; // pong player
 int DARK_PURPLE_1 = 166; // pong background 134 old value
 int DARK_PURPLE_2 = 134; // pong wall
-int DARK_PURPLE_3 = 234; // pong point zone
+int LIGHT_PURPLE_2 = 234; // pong point zone

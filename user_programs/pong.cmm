@@ -55,7 +55,7 @@ int pong() {
   palette_index_write(1 DARK_PURPLE_2 DARK_PURPLE_2);   // wall
   palette_index_write(2 ATOM_PINK DARK_PURPLE_1);     	// ball
   palette_index_write(3 ATOM_PINK DARK_PURPLE_2); 	    // score
-	palette_index_write(4 DARK_PURPLE_3 DARK_PURPLE_3);   // point zone
+	palette_index_write(4 DARK_PURPLE_1 DARK_PURPLE_1);   // point zone
 	palette_index_write(5 ATOM_PINK ATOM_PINK);   // player 
 	palette_index_write(6 ATOM_PINK DARK_PURPLE_2);       // text
 
