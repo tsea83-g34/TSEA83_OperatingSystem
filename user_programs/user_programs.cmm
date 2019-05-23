@@ -1,8 +1,9 @@
-char USER_PROGRAMS[] = "ls\0pong\0snake_paint\0";
-int USER_PROGRAM_COUNT = 3;
+char USER_PROGRAMS[] = "ls\0pong\0rainbow\0snake_paint\0";
+int USER_PROGRAM_COUNT = 4;
 
 int ls();
 int pong();
+int rainbow();
 int snake_paint();
 
 int call_user_program(int program) {
@@ -13,6 +14,9 @@ int call_user_program(int program) {
 		pong();
 	}
 	else if (program == 2) {
+		rainbow();
+	}
+	else if (program == 3) {
 		snake_paint();
 	}
 	else {}
@@ -20,5 +24,6 @@ int call_user_program(int program) {
 
 #include ls.cmm
 #include pong.cmm
+#include rainbow.cmm
 #include snake_paint.cmm
 
