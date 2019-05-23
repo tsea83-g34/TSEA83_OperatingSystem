@@ -8,7 +8,7 @@ int ls() {
     int i = 0;
  
     char *name = USER_PROGRAMS;
- 
+    out(USER_PROGRAM_COUNT 0);
     // Print all user program names
     while (i < USER_PROGRAM_COUNT) {
         int length = string_length(name);
