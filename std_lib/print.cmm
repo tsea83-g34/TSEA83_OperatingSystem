@@ -287,7 +287,7 @@ int print_sprite(char* cb_p int x int y) {
     char* start_p = cb_p;
     while (*cb_p) {
         if (*cb_p == '\n') {
-            start_p = start_p + (cb_p - start_p);
+            start_p = cb_p + 1;
             y = y + 1;
         }
         else {

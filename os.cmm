@@ -41,7 +41,7 @@ int main() {
         memset(input_buffer 40 0);
         
         // Print logo
-        print_sprite(SMALL_MUXOS_LOGO 1 0);
+        print_sprite(LARGE_MUXOS_LOGO 1 0);
 
         // Skip 25 lines
         set_cursor(0 25);
