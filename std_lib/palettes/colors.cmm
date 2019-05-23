@@ -41,4 +41,4 @@ int ATOM_BLUE  = 87;
 int ATOM_RED   = 233;
 
 // Big bangus
-int ANGUS_PURPLE = 65;
+int ANGUS_PURPLE = 33;
