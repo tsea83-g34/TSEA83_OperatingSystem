@@ -39,3 +39,6 @@ int ATOM_GREEN = 118;
 int ATOM_WHITE = 182;
 int ATOM_BLUE  = 87;
 int ATOM_RED   = 233;
+
+// Big bangus
+int ANGUS_PURPLE = 65;
