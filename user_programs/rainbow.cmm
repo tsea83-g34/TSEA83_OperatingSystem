@@ -8,8 +8,20 @@ int rainbow() {
     
     int index = 0;
     int color = 0;
+    char palettes[16];
+    char curr_palette = 0;
+    int palette = 127;
     char keyboard = 0;
     char goodbyee[] = "GOODBYE";
+    BG_COLOR = 0;
+    // Program loop
+    // Set palette
+    char i = 0;
+    out(i 0);
+    while (i < 16) {
+        palettes[i] = i*16;
+        i = i + 1;
+    }
     while(1) {
         // Drawing loop
         index = 0;
@@ -19,22 +31,28 @@ int rainbow() {
             keyboard = read_char();
             if (keyboard == '\e'){
                 print(goodbyee);
-                sleep_ms(500);
+                sleep_ms(1000);
                 return 0;
+            } else if (keyboard != 'a') {
+                curr_palette = curr_palette + 1;
+                palette = palette + 1;
+                out(palette 0);
+                if (curr_palette >= 16) {
+                    curr_palette = 0;
+                }
             }
 
-            //Only count the 11 colors
-            if (color >= 11) color = 0;
+            // Write pallette
+            palette_index_write(curr_palette palette palette);
 
-            // Set color
-            BG_COLOR = 4 + color;
-
+            BG_COLOR = curr_palette;
             // Output nul character
             print_c(0);
 
             index = index + 1;
-            color = color + 1;
-            sleep_ms(10);
+            
+            // Sleep
+            sleep_ms(5);
         }
     }
 
