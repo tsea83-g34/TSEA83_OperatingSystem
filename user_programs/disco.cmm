@@ -1,7 +1,7 @@
 /*
 TSEA83 PROJECT USER PROGRAM
  
-DISCO - A program for printing a colorful rainbow
+DISCO - A program for having a seizure
 */
 
 int disco() {
@@ -62,6 +62,7 @@ int disco() {
             // Sleep
             sleep_ms(4);
         }
+        clear();
     }
 
     return 0;
